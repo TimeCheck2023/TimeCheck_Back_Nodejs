@@ -4,6 +4,7 @@ const services = new user_services()
 
 
 class UserController {
+    
     async registerUser(req, res) {
         const { error } = verfiRegister.validate(req.body);
         if (error) {
@@ -15,16 +16,17 @@ class UserController {
             const data = req.body
             const Users = services.createUsers(data)
             Users.then((responde) =>{
-                console.log(responde.recordset);
+                console.log(responde);
                 res.status(200).json({
-                    data: responde.recordset, msg: "registrado"
+                    data: responde, msg: "registrado"
                 })
-
             }).catch((err) =>{
-                console.log(err.message);
+                 res.status(500).json({
+                    status: false, msg: err.message
+                })
             })
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     }
 }
