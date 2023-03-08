@@ -29,6 +29,32 @@ class UserController {
             console.log(error);
         }
     }
+
+    async LoginUser(req, res) {
+        // const { error } = verfiRegister.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({
+        //         error: error.details[0].message,
+        //     })
+        // }
+        try {
+            const data = req.body
+            const Users = services.VeryUsers(data)
+            Users.then((responde) =>{
+                console.log(responde);
+                // res.status(200).json({
+                //     data: responde, msg: "registrado"
+                // })
+            }).catch((err) =>{
+                console.log(err);
+                //  res.status(500).json({
+                //     status: false, msg: err.message
+                // })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 

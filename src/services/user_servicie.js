@@ -24,6 +24,17 @@ class user_service {
       }
       return register
    }
+   async VeryUsers(data) {
+      const register = await pool.request()
+         .input("cedula", sql.BigInt, data.cedula)
+         .input("email", sql.VarChar(50), data.email)
+         .execute(query.VeryUsersLogin)
+         console.log(register);
+      // if (register.recordset) {
+      //    throw new Error(register.recordset[0]['']);
+      // }
+      // return register
+   }
 }
 
 module.exports = user_service;
