@@ -1,7 +1,7 @@
 const pool = require('../database/Connection')
 const sql = require('mssql')
 const query = require('../database/query')
-const { encryptPass, macthPass } = require('../helpers/bcrypt')
+const { encryptPass, macthPass, CreateToken} = require('../helpers/bcrypt')
 
 class user_service {
 
@@ -24,16 +24,22 @@ class user_service {
       }
       return register
    }
+   
    async VeryUsers(data) {
-      const register = await pool.request()
-         .input("cedula", sql.BigInt, data.cedula)
+      const VeryUser = await pool.request()
          .input("email", sql.VarChar(50), data.email)
          .execute(query.VeryUsersLogin)
-         console.log(register);
-      // if (register.recordset) {
-      //    throw new Error(register.recordset[0]['']);
-      // }
-      // return register
+         if (VeryUser.recordset[0][''] === 0 || !await macthPass(data.password, VeryUser.recordset[0].contraseña)) {
+         throw new Error("usuario o contraseña incorrecta");
+      }else{
+            const payload = {
+               cedula: VeryUser.recordset[0].cedula,
+               nombre: VeryUser.recordset[0].nombre_usuario,
+               email: VeryUser.recordset[0].email
+             };
+             const TokenCreado = await CreateToken(payload)
+            return TokenCreado
+      }
    }
 }
 

@@ -39,17 +39,14 @@ class UserController {
         // }
         try {
             const data = req.body
+            console.log(data);
             const Users = services.VeryUsers(data)
             Users.then((responde) =>{
-                console.log(responde);
-                // res.status(200).json({
-                //     data: responde, msg: "registrado"
-                // })
+                res.cookie('jwt', responde,{ httpOnly: false, expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) }).status(200).json({msg: "enviada token"})
             }).catch((err) =>{
-                console.log(err);
-                //  res.status(500).json({
-                //     status: false, msg: err.message
-                // })
+                 res.status(500).json({
+                    status: false, msg: err.message
+                })
             })
         } catch (error) {
             console.log(error);
