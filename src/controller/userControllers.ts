@@ -8,15 +8,17 @@ export class UsersController {
     registerUser(req: Request, res: Response) {
         try {
             const Users: Users_dto = req.body;
-            console.log(Users)
             services.createUser(Users).then((responde) => {
-                console.log(responde);
+                res.status(200).json({
+                  message: "gracias por tus datos"
+                })
             }).catch((err) => {
-                console.log(err);
+                res.status(404).json({
+                  error: err
+                })
             })
         } catch (error) {
             console.log(error);
-
         }
     }
 }

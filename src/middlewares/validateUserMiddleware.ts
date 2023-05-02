@@ -8,6 +8,7 @@ const validateUserMiddle = (req: Request, res: Response, next: NextFunction) => 
     const { error } = req.path === '/Register' ? userSchemaR.validate(data) : userSchemaL.validate(data)
     // const { error } = await userSchemaR.validateAsync(data)
     if (error) {
+      console.log(error.details[0].message);
         return res.status(400).json({
             error: error.details[0].message,
         })

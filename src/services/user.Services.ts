@@ -2,7 +2,7 @@ import sql from "mssql";
 import { Users_dto } from "../Dto/Users_dto";
 import Users_interface from "../Interfaces/users_interfaces";
 import pool from "../database/Connection";
-const query = require('../database/query')
+// const query = require('../database/query')
 
 
 class user_service implements Users_interface {
