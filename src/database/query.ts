@@ -1,5 +1,5 @@
 const querys = {
-    CreateUsersRegister: "US_USUARIO_INSERTAR",
+    CreateUsersRegister: "sp_INSERT_USUARIO",
     VeryUsersLogin: "US_USUARIO_VERYFIUSERS"
 }
 
