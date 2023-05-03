@@ -2,20 +2,24 @@ import sql from "mssql";
 import { Users_dto } from "../Dto/Users_dto";
 import Users_interface from "../Interfaces/users_interfaces";
 import pool from "../database/Connection";
-// const query = require('../database/query')
+import query from "../database/query";
 
 
 class user_service implements Users_interface {
-    async createUser({ emailAdress, fullName, address, documentNumber, documentType, password }: Users_dto): Promise<Users_dto | string> {
-        // const registerNewUser = pool.request()
-        //     .input("cedula", sql.BigInt, tipo_cuenta)
-        //     .input("tipo_doc", sql.VarChar(2), name)
-        //     .input("nombre_usuario", sql.VarChar(50), adress)
-        //     .input("direccion_residencia", sql.VarChar(50), phone)
-        //     .input("email", sql.VarChar(50), email)
-        //     .input("contraseña", sql.VarChar(2000), password)
-        //     .execute(query.CreateUsersRegister)
-        return { emailAdress, fullName, address, documentNumber, documentType, password };
+    async createUser({ emailAddress, fullName, address, documentNumber, documentType, password }: Users_dto): Promise<string> {
+        try {
+            const request = pool.request()
+                .input("tipo_documento_usuario", sql.VarChar(255), documentType)
+                .input("nro_documento_usuario", sql.BigInt, documentNumber)
+                .input("nombre_completo_usuario", sql.VarChar(255), fullName)
+                .input("direccion_usuario", sql.VarChar(255), address)
+                .input("correo_usuario", sql.VarChar(255), emailAddress)
+                .input("contraseña_usuario", sql.VarChar(2000), password)
+            const result = await request.execute(query.CreateUsersRegister);
+            return result.recordset[0].RESPUESTA;
+        } catch (error) {
+            throw error;
+        }
     }
 
 }

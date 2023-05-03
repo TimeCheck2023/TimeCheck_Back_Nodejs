@@ -10,15 +10,17 @@ export class UsersController {
             const Users: Users_dto = req.body;
             services.createUser(Users).then((responde) => {
                 res.status(200).json({
-                  message: "gracias por tus datos"
+                  message: responde
                 })
             }).catch((err) => {
                 res.status(404).json({
-                  error: err
+                  error: err.originalError.info.message
                 })
             })
         } catch (error) {
-            console.log(error);
+            res.status(404).json({
+                error: error
+              })
         }
     }
 }

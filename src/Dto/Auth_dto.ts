@@ -1,4 +1,4 @@
 export interface Auth_dto {
-    emailAdress: string;
+    emailAddress: string;
     password: string;
 }
