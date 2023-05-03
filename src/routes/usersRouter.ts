@@ -5,7 +5,7 @@ import validateUserMiddle from "../middlewares/validateUserMiddleware";
 const controller = new UsersController;
 const router = Router();
 
-router.post("/Register", validateUserMiddle, controller.registerUser);
-router.post("/Login");
+router.post("/register", validateUserMiddle, controller.registerUser);
+router.post("/login");
 
 export default router;

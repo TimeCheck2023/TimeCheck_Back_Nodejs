@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import './database/Connection'
-import indexRouter from "./routes/index";
+import usersRouter from "./routes/usersRouter";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
@@ -32,7 +32,7 @@ class Server {
 
     //routes
     Routes() {
-        this.app.use('/v1/api/', indexRouter)
+        this.app.use('/user', usersRouter)
     }
 
     //server
