@@ -9,6 +9,7 @@ export class UsersController {
         try {
             const Users: Users_dto = req.body;
             services.createUser(Users).then((responde) => {
+              console.log(responde);
                 res.status(200).json({
                   message: responde
                 })
