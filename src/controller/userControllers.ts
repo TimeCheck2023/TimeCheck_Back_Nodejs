@@ -13,12 +13,14 @@ export class UsersController {
                   message: responde
                 })
             }).catch((error) => {
+              console.log("error");
+              console.log(error.originalError.info.message);
                 res.status(404).json({
                   error: error.originalError.info.message
                 })
             })
         } catch (error) {
-          console.log(error);
+          console.log("error");
             res.status(404).json({
                 error: error
               })
