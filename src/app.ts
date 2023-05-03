@@ -8,7 +8,7 @@ import config from "./config";
 class Server {
 
     app: Application;
-    port: number;
+    port: string | number;
 
     constructor() {
         //aca iniciamos express
