@@ -15,7 +15,7 @@ class user_service implements Users_interface {
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), password)
       const result = await request.execute(query.CreateUsersRegister);
-      return result.recordset[0].RESPUESTA;
+      return result.recordset[0].mensaje_respuesta;
     } catch (error) {
       throw error;
     }

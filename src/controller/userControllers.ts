@@ -12,12 +12,13 @@ export class UsersController {
                 res.status(200).json({
                   message: responde
                 })
-            }).catch((err) => {
+            }).catch((error) => {
                 res.status(404).json({
-                  error: err.originalError.info.message
+                  error: error.originalError.info.message
                 })
             })
         } catch (error) {
+          console.log(error);
             res.status(404).json({
                 error: error
               })
