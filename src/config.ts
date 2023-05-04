@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv/config'
+// dotenv.config()
 
 export default {
     SQL_DATABASE : 'timecheck',
