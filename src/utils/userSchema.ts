@@ -1,5 +1,6 @@
 import Joi from "joi";
 
+// creamos los shemas de validacion ayudandonos del module Joi que nos facilita la sintaxis
 
 const userSchemaR = Joi.object({
     documentType: Joi.string().required(),

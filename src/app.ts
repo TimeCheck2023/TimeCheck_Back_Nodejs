@@ -1,16 +1,26 @@
 import express, { Application } from "express";
+//importo la conexion a la base de datos
 import './database/Connection'
+
+//importo las rutas del sistema
 import usersRouter from "./routes/usersRouter";
+//registro de petciones del sistema
 import morgan from "morgan";
+// permite la autorizacion a mi servidor
 import cors from "cors";
+// variables de entorno
 import config from "./config";
+// manejador de errores
 import errorHandler from "./middlewares/ErrorMiddleware";
 
+// class de la configuracion del servidor
 class Server {
 
+    // atributos
     app: Application;
     port: string | number;
 
+    //constructor
     constructor() {
         //aca iniciamos express
         this.app = express();

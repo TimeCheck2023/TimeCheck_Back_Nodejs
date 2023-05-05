@@ -5,8 +5,7 @@ import pool from "../database/Connection";
 import query from "../database/query";
 
 class user_service implements Users_interface {
-  async createUser({ emailAddress, fullName, documentNumber, documentType, password }: Users_dto): Promise<string> {
-    console.log("bueno del servicio");
+  async createUser({ emailAddress, fullName, documentNumber, documentType, password }: Users_dto): Promise<string | unknown> {
     try {
       const request = pool.request()
         .input("tipo_documento_usuario", sql.VarChar(255), documentType)
@@ -14,10 +13,9 @@ class user_service implements Users_interface {
         .input("nombre_completo_usuario", sql.VarChar(255), fullName)
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), password)
-      const result = await request.execute(query.CreateUsersRegister);      
-      return 'hoola';
+      await request.execute(query.CreateUsersRegister);
+      return 'Gracias por registrarse';
     } catch (error) {
-      console.log("error del servicio");
       throw error
     }
   }

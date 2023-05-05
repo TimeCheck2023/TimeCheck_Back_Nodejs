@@ -1,6 +1,7 @@
-import sql, { connect } from "mssql";
+import sql from "mssql";
 import config from '../config'
 
+// configuracion de la conexion a sql server
 const configOptions = {
   user: config.SQL_USER,
   password: config.SQL_PASSWORD,
@@ -12,9 +13,12 @@ const configOptions = {
   }
 }
 
+//ConnectionPool instancia es un grupo separado de conexiones se adquiere una nueva conexión TDS del grupo y se reserva para la acción deseada. 
+// Una vez que se completa la acción, la conexión se libera de nuevo al grup
 const pool = new sql.ConnectionPool(configOptions);
 
 
+// validacion la conexion para saber si se conecto o no
 pool.connect().then(() => {
   console.log('Conexión a SQL Server establecida correctamente.');
 }).catch(err => {
