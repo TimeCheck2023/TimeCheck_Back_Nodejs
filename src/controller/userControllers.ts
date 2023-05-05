@@ -12,6 +12,18 @@ export class UsersController {
         res.status(200).json({ message: responde })
       }).catch((error) => {
         res.status(404).json({ error: error.originalError.info.message })
+      });
+  }
+
+  async loginUser(req: Request, res: Response) {
+    const data: Users_dto = req.body
+    await services.authUser(data)
+      .then((responde) => {
+        console.log("res");
+        res.status(200).json({ message: responde })
+      }).catch((error) => {
+        console.log("err");
+        res.status(400).json({ error: error.message })
       })
   }
 }

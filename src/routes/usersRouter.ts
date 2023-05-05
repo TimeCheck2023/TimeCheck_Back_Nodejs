@@ -11,6 +11,6 @@ const controller = new UsersController;
 const router = Router();
 
 router.post("/register", validateUserMiddle(userSchemaR), controller.registerUser);
-router.post("/login");
+router.post("/login", validateUserMiddle(userSchemaL), controller.loginUser);
 
 export default router;
