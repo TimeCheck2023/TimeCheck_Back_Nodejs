@@ -7,15 +7,13 @@ const userSchemaR = Joi.object({
     fullName: Joi.string().required(),
     address: Joi.string(),
     emailAddress: Joi.string().email().required(),
-    // "password" debe contener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.
-    password: Joi.string().pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).required()
+    password: Joi.string().required()
 });
 
 
 const userSchemaL = Joi.object({
     emailAddress: Joi.string().email().required(),
-    // "password" debe contener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.
-    password: Joi.string().pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).required()
+    password: Joi.string().required()
 });
 
 export { userSchemaR, userSchemaL };

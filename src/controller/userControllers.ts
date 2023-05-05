@@ -5,26 +5,18 @@ const services = new userServices;
 
 
 export class UsersController {
-    registerUser(req: Request, res: Response) {
-        try {
-            const Users: Users_dto = req.body;
-            services.createUser(Users).then((responde) => {
-              console.log(responde);
-                res.status(200).json({
-                  message: responde
-                })
-            }).catch((error) => {
-              console.log("error");
-              console.log(error.originalError.info.message);
-                res.status(404).json({
-                  error: error.originalError.info.message
-                })
-            })
-        } catch (error) {
-          console.log("error");
-            res.status(404).json({
-                error: error
-              })
-        }
+  async registerUser(req: Request, res: Response) {
+    try {
+      const Users: Users_dto = req.body;
+      let response = await services.createUser(Users)
+      res.status(200).json({ message: response })
+    } catch (error) {
+      res.status(404).json({ error: error})
     }
+    // services.createUser(Users).then((responde) => {
+    //   res.status(200).json({ message: responde })
+    // }).catch((error) => {
+    //   res.status(404).json({ error: error.originalError.info.message })
+    // })
+  }
 }

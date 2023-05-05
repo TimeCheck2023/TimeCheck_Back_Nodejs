@@ -4,6 +4,7 @@ import usersRouter from "./routes/usersRouter";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
+import errorHandler from "./middlewares/ErrorMiddleware";
 
 class Server {
 
@@ -15,6 +16,7 @@ class Server {
         this.app = express();
         // condig de port
         this.port = config.PORT || 3000;
+
         //medtodos iniciales
         this.middleware();
         this.Routes();
@@ -27,7 +29,9 @@ class Server {
         // lectura de Body
         this.app.use(express.json());
         //registro de peticiones
-        this.app.use(morgan('dev'))
+        this.app.use(morgan('dev'));
+
+        this.app.use(errorHandler);
     }
 
     //routes
