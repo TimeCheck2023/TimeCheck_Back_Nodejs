@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+
 //importo la conexion a la base de datos
 import './database/Connection'
 
@@ -9,10 +10,13 @@ import AuthRouter from "./routes/AuthRouter";
 
 //registro de petciones del sistema
 import morgan from "morgan";
+
 // permite la autorizacion a mi servidor
 import cors from "cors";
+
 // variables de entorno
 import config from "./config";
+
 // manejador de errores
 import errorHandler from "./middlewares/ErrorMiddleware";
 

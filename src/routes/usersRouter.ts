@@ -1,6 +1,6 @@
 import { Router } from "express";
 // importams el controlador
-import { UsersController } from "../controller/userControllers";
+import UsersController from "../controller/userControllers";
 //middleware que hace la validacion de los datos que entran
 import validateDataMiddle from "../middlewares/validateDataMiddleware";
 import authMiddleware from "../middlewares/AuthMiddleware";

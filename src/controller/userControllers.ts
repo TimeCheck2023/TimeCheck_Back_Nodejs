@@ -4,7 +4,7 @@ import { Users_dto } from "../Dto/Users_dto";
 const services = new userServices;
 
 
-export class UsersController {
+class UsersController {
   async registerUser(req: Request, res: Response) {
     const Users: Users_dto = req.body;
     services.createUser(Users)
@@ -21,3 +21,5 @@ export class UsersController {
     })
   }
 }
+
+export default UsersController;
