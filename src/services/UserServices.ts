@@ -16,7 +16,7 @@ class user_service implements Users_interface {
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), newPassword)
       await request.execute(query.CreateUsersRegister);
-      return 'Gracias por registrarse';
+      return 'Gracias por registrarse!!!';
     } catch (error) {
       throw error
     }
