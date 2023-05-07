@@ -8,4 +8,5 @@ export default {
     SQL_PASSWORD : 'ps9tktjhs5',
     SQL_SERVER : 'timecheck.mssql.somee.com',
     PORT : process.env.PORT,
+    JWT_SECRET : process.env.SECRETJWT
 }
