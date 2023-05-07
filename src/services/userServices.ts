@@ -1,6 +1,6 @@
 import sql from "mssql";
 import { Users_dto } from "../Dto/Users_dto";
-import Users_interface from "../Interfaces/users_interfaces";
+import Users_interface from "../Interfaces/Users_interfaces";
 import pool from "../database/Connection";
 import query from "../database/query";
 import { encryptPass } from "../utils/bcrypt";

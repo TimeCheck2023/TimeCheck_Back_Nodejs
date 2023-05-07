@@ -5,6 +5,7 @@ import './database/Connection'
 
 //importo las rutas del sistema
 import usersRouter from "./routes/UserRouter";
+import OrgRouter from "./routes/OrgRouter";
 import AuthRouter from "./routes/AuthRouter";
 
 
@@ -55,6 +56,7 @@ class Server {
     Routes() {
         this.app.use('/user', usersRouter)
         this.app.use('/Auth', AuthRouter)
+        this.app.use('/Org', OrgRouter)
     }
 
     //server
