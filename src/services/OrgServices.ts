@@ -16,7 +16,7 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
             await request.execute(query.CreateOrganizacionRegister);
-            return 'Organizacion insertada correctamente';
+            return 'Organizacion insertada correctamente!!';
         } catch (error) {
             throw error;
         }
