@@ -6,6 +6,6 @@ const controller = new OrgController();
 
 const router = Router();
 
-router.post('/register', validateDataMiddle(OrgSchemaR))
+router.post('/register', validateDataMiddle(OrgSchemaR), controller.registerOrg)
 
 export default router;
