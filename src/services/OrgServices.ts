@@ -7,7 +7,7 @@ import { encryptPass } from "../utils/bcrypt";
 
 
 class Org_service implements Org_interface {
-    async createOrganization({ organization_name, address_organization, email_organization, organization_password }: Org_dto) {
+    async createOrganization({ organization_name, address_organization, email_organization, organization_password }: Org_dto): Promise<string | unknown> {
         const newPassword = await encryptPass(organization_password)
         try {
             const request = pool.request()
