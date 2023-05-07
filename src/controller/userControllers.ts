@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import userServices from "../services/userServices";
 import { Users_dto } from "../Dto/Users_dto";
-const services = new userServices;
+const services = new userServices();
 
 
 class UsersController {
