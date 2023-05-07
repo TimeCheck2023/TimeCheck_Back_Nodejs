@@ -15,19 +15,9 @@ export class UsersController {
       });
   }
 
-  async loginUser(req: Request, res: Response) {
-    const data: Users_dto = req.body
-    await services.authUser(data)
-      .then((responde) => {
-        res.status(200).json({ message: responde })
-      }).catch((error) => {
-        res.status(400).json({ error: error.message })
-      })
-  }
-
   async getUser(req: Request, res: Response) {
-      res.status(200).json({
-        message: 'User social profile'
-      })
+    res.status(200).json({
+      message: 'User social profile'
+    })
   }
 }

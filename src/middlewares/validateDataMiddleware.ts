@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
 
-const validateUserMiddle = (schema: Joi.ObjectSchema) => (req: Request, res: Response, next: NextFunction) => {
+const validateDataMiddle = (schema: Joi.ObjectSchema) => (req: Request, res: Response, next: NextFunction) => {
   const data = req.body;
   const { error } = schema.validate(data)
   if (error) {
@@ -13,4 +13,4 @@ const validateUserMiddle = (schema: Joi.ObjectSchema) => (req: Request, res: Res
   next()
 }
 
-export default validateUserMiddle;
+export default validateDataMiddle;
