@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { Org_dto } from "../Dto/Org_dto";
 import Org_service from '../services/OrgServices'
-
+import { Org_dto } from "../Dto/Org_dto";
 const services = new Org_service();
 
 class OrgController {

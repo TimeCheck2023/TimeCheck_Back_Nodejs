@@ -1,8 +1,8 @@
-import sql from "mssql";
-import { Users_dto } from "../Dto/Users_dto";
 import Users_interface from "../Interfaces/Users_interfaces";
-import pool from "../database/Connection";
 import query from "../database/query";
+import { Users_dto } from "../Dto/Users_dto";
+import sql from "mssql";
+import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 
 class user_service implements Users_interface {
