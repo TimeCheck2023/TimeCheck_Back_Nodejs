@@ -4,7 +4,7 @@ import express, { Application } from "express";
 import './database/Connection'
 
 //importo las rutas del sistema
-import usersRouter from "./routes/UsersRouter";
+import usersRouter from "./routes/UserRouter";
 // import AuthRouter from "./routes/AuthRouter";
 
 
