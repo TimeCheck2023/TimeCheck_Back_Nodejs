@@ -8,14 +8,13 @@ class Auth_service {
     async authUser({ emailAddress, password }: Auth_dto): Promise<string | unknown> {
         try {
             const request = pool.request()
-                .input("correo_usuario", sql.VarChar(255), emailAddress)
+                .input("correo_usu_org", sql.VarChar(255), emailAddress)
             const responde = await request.execute(query.VeryUsersLogin)
-            if (responde.recordset[0][''] === 0 || !await macthPass(password, responde.recordset[0].contraseña_usuario)) {
-                throw new Error("usuario o contraseña incorrecta");
-            }
-            const token = await CreateToken(responde.recordset[0].correo_usuario)
+            if (!await macthPass(password, responde.recordset[0].contraseña)) throw new Error("usuario o contraseña incorrect");
+            const token = await CreateToken(responde.recordset[0].correo_organizacion, responde.recordset[0].EsUsuario)
             return token;
         } catch (error) {
+            console.log(error);
             throw error
         }
     }

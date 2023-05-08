@@ -11,8 +11,8 @@ export const macthPass = async (password: string, savePassword: string): Promise
   return await bcrypt.compare(password, savePassword)
 }
 
-export const CreateToken = async (payload: string) => {
-
+export const CreateToken = async (correo: string, esUsuario: number) => {
+  const payload = { esUsuario, correo };
   // exp: Math.floor(Date.now() / 1000) + (60 * 60) // valido de un dia
   //  // creamos el token con jwt con una expiracion, los datos y la palabra secreta
   const token = jwt.sign({
