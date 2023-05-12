@@ -7,6 +7,7 @@ import './database/Connection'
 import usersRouter from "./routes/UserRouter";
 import OrgRouter from "./routes/OrgRouter";
 import AuthRouter from "./routes/AuthRouter";
+import SubOrgRouter from "./routes/SubOrgRouter";
 
 
 //registro de petciones del sistema
@@ -57,6 +58,7 @@ class Server {
         this.app.use('/user', usersRouter)
         this.app.use('/Auth', AuthRouter)
         this.app.use('/Org', OrgRouter)
+        this.app.use('/SubOrg', SubOrgRouter)
     }
 
     //server

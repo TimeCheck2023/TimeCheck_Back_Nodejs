@@ -2,6 +2,7 @@
 const querys = {
     CreateUsersRegister: "sp_INSERT_USUARIO",
     CreateOrganizacionRegister: "sp_INSERT_ORGANIZACION",
+    CreateSubOrganizacionRegister: "sp_INSERT_SUBORGANIZACION",
     VeryUsersLogin: "sp_autenticar_usuario"
 }
 

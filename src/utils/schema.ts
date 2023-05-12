@@ -18,10 +18,16 @@ const OrgSchemaR = Joi.object({
     organization_password: Joi.string()
 });
 
+const SubOrgSchemaR = Joi.object({
+    name_organization: Joi.string().required(),
+    description_organization: Joi.string().required(),
+    id: Joi.number().required()
+});
+
 
 const userSchemaL = Joi.object({
     emailAddress: Joi.string().email().required(),
     password: Joi.string().required()
 });
 
-export { userSchemaR, OrgSchemaR ,userSchemaL };
+export { userSchemaR, OrgSchemaR ,userSchemaL, SubOrgSchemaR };
