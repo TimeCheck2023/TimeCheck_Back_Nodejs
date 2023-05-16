@@ -15,7 +15,29 @@ class UsersController {
       });
   }
 
-  async getUser(req: Request, res: Response) {
+  async getUserId(req: Request, res: Response) {
+    const id = parseInt(req.params.id)
+    services.getUserId(id)
+      .then((responde) => {
+        res.status(200).json({ message: responde })
+      }).catch((error) => {
+        res.status(404).json({ error: error.originalError.info.message })
+      });
+  }
+
+
+  async updateUser(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const data = req.body;
+    services.UpdateUsers(data, id)
+      .then((responde) => {
+        res.status(200).json({ message: responde })
+      }).catch((error) => {
+        res.status(404).json({ error: error.originalError.info.message })
+      });
+  }
+
+  async deleteUser(req: Request, res: Response) {
     res.status(200).json({
       message: 'User social profile'
     })

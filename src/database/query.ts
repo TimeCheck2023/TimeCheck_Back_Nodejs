@@ -4,7 +4,9 @@ const querys = {
     CreateOrganizacionRegister: "sp_INSERT_ORGANIZACION",
     CreateSubOrganizacionRegister: "sp_INSERT_SUBORGANIZACION",
     VeryUsersLogin: "sp_autenticar_usuario",
-    getEvent: "sp_ObtenerEventos"
+    getEvent: "sp_ObtenerEventos",
+    getUserId: "sp_ObtenerUsuarios",
+    UpdateUser: "sp_UpdateUsuario"
 }
 
 

@@ -21,6 +21,37 @@ class user_service implements Users_interface {
       throw error
     }
   }
+
+
+
+  async getUserId(documentNumber: number): Promise<Users_dto[] | unknown>{
+    try {
+      const request = pool.request()
+      .input('nro_documento_usuario', documentNumber)
+      const result = await request.execute(query.getUserId)
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: Users_dto, documentNumber: number): Promise<string | unknown>{
+    try {
+      const request = pool.request()
+      .input('nombre_completo_usuario', fullName)
+      .input('tipo_documento_usuario', documentType)
+      .input('direccion_usuario', address)
+      .input('tipo_poblacion', typeofpopulation)
+      .input('correo_usuario', emailAddress)
+      .input('nro_documento_usuario', documentNumber)
+
+      const result = await request.execute(query.UpdateUser)
+      console.log(result)
+      return 'Actualizacion correctamente'
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 

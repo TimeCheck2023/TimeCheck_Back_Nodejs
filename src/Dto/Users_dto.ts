@@ -6,4 +6,5 @@ export interface Users_dto extends Auth_dto {
     documentNumber?: string;
     fullName: string;
     address?: string;
+    typeofpopulation?: string;
 }

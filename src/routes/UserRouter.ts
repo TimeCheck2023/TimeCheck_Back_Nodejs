@@ -5,7 +5,7 @@ import UsersController from "../controller/UserControllers";
 import validateDataMiddle from "../middlewares/ValidateDataMiddleware";
 import authMiddleware from "../middlewares/AuthMiddleware";
 // shema que tendra el objeto de la validacion de datos de entrada
-import { userSchemaR } from "../utils/schema";
+import { userSchemaR, userSchemaUpdate } from "../utils/schema";
 
 const controller = new UsersController();
 
@@ -13,6 +13,9 @@ const router = Router();
 
 
 router.post("/register", validateDataMiddle(userSchemaR), controller.registerUser);
-router.get("/User", authMiddleware, controller.getUser);
+router.get("/:id", controller.getUserId);
+router.put("/update/:id", validateDataMiddle(userSchemaUpdate), controller.updateUser);
+router.delete("/delete/:id", controller.deleteUser);
+// router.get("/User", authMiddleware, controller.getUser);
 
 export default router;

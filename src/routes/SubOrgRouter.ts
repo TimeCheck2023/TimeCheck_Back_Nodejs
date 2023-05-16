@@ -6,6 +6,6 @@ const controller = new SubOrgControllers()
 
 const router = Router();
 
-router.post('/register/:numero', validateDataMiddle(SubOrgSchemaR), controller.registerSubOrg)
+router.post('/register/:id', validateDataMiddle(SubOrgSchemaR), controller.registerSubOrg)
 
 export default router;
