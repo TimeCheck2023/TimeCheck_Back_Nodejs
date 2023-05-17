@@ -6,6 +6,8 @@ import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 
 class user_service implements Users_interface {
+  
+  
   async createUser({ emailAddress, fullName, documentNumber, documentType, password }: Users_dto): Promise<string | unknown> {
     try {
       const newPassword = await encryptPass(password)
