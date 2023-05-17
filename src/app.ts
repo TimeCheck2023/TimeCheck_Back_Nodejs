@@ -56,18 +56,18 @@ class Server {
 
     //routes
     Routes() {
-        this.app.use('/user', usersRouter)
-        this.app.use('/Auth', AuthRouter)
-        this.app.use('/Org', OrgRouter)
-        this.app.use('/SubOrg', SubOrgRouter)
-        this.app.use('/Event', EventsRouter)
+        this.app.use('/user', usersRouter) //ruta de usuarios
+        this.app.use('/Auth', AuthRouter) //ruta de Auth
+        this.app.use('/Org', OrgRouter) //ruta de organizacion
+        this.app.use('/SubOrg', SubOrgRouter) //ruta de subOrganizacion
+        this.app.use('/Event', EventsRouter) //ruta de eventos
     }
 
     //server
     listen() {
-        this.app.listen( this.port, () => {
+        this.app.listen(this.port, () => {
             console.log(`server listening on port ${this.port}`);
-        }); 
+        });
     }
 }
 

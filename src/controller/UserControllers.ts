@@ -5,6 +5,7 @@ const services = new userServices();
 
 
 class UsersController {
+  
   async registerUser(req: Request, res: Response) {
     const Users: Users_dto = req.body;
     services.createUser(Users)
