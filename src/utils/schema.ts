@@ -20,10 +20,12 @@ export const userSchemaUpdate = Joi.object({
 });
 
 export const OrgSchemaR = Joi.object({
+    id: Joi.number(),
     organization_name: Joi.string().required(),
     address_organization: Joi.string().required(),
     email_organization: Joi.string().email().required(),
-    organization_password: Joi.string()
+    organization_password: Joi.string(),
+    numero_telefono: Joi.number().required(),
 });
 
 export const SubOrgSchemaR = Joi.object({

@@ -1,13 +1,33 @@
 import Users_interface from "../Interfaces/Users_interfaces";
 import query from "../database/query";
-import { Users_dto } from "../Dto/Users_dto";
+import { NotPasswordIdentify, Users_Get_dto, Users_dto } from "../Dto/Users_dto";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 
 class user_service implements Users_interface {
   
+  async getUsers(): Promise<Users_Get_dto[] | unknown>{
+    try {
+      const request = pool.request()
+      const result = await request.execute(query.getUsers)
+      return result.recordset;
+    } catch (error) {
+      throw error;
+    }
+  }
   
+  async getUserId(documentNumber: number): Promise<Users_Get_dto[] | unknown>{
+    try {
+      const request = pool.request()
+      .input('nro_documento_usuario', sql.BigInt, documentNumber)
+      const result = await request.execute(query.getUserId)
+      return result.recordset[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async createUser({ emailAddress, fullName, documentNumber, documentType, password }: Users_dto): Promise<string | unknown> {
     try {
       const newPassword = await encryptPass(password)
@@ -24,20 +44,7 @@ class user_service implements Users_interface {
     }
   }
 
-
-
-  async getUserId(documentNumber: number): Promise<Users_dto[] | unknown>{
-    try {
-      const request = pool.request()
-      .input('nro_documento_usuario', documentNumber)
-      const result = await request.execute(query.getUserId)
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: Users_dto, documentNumber: number): Promise<string | unknown>{
+  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown>{
     try {
       const request = pool.request()
       .input('nombre_completo_usuario', fullName)
@@ -45,7 +52,7 @@ class user_service implements Users_interface {
       .input('direccion_usuario', address)
       .input('tipo_poblacion', typeofpopulation)
       .input('correo_usuario', emailAddress)
-      .input('nro_documento_usuario', documentNumber)
+      .input('nro_documento_usuario', documentNumber);
 
       const result = await request.execute(query.UpdateUser)
       console.log(result)

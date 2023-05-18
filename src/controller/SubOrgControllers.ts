@@ -5,7 +5,7 @@ const services = new SubOrg_Services();
 
 class SubOrgControllers {
   async registerSubOrg(req: Request, res: Response) {
-    const numero = parseInt(req.params.numero);
+    const numero = parseInt(req.params.id);
     const data: SubOrg = req.body;
     await services
       .createSubOrganization(data, numero)
@@ -13,6 +13,7 @@ class SubOrgControllers {
         res.status(200).json({ message: responde });
       })
       .catch((error) => {
+        console.log(error);
         res.status(400).json({ error: error.originalError.info.message });
       });
   }

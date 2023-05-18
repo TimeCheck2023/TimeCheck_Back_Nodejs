@@ -5,10 +5,8 @@ import query from "../database/query";
 import pool from "../database/Connection";
 
 class SubOrg_Services implements SubOrg_interface {
-  async createSubOrganization(
-    { name_organization, description_organization }: SubOrg,
-    id_organizacion: number
-  ): Promise<string | unknown> {
+  
+  async createSubOrganization({ name_organization, description_organization }: SubOrg, id_organizacion: number): Promise<string | unknown> {
     try {
       const request = pool
         .request()

@@ -8,8 +8,6 @@ import usersRouter from "./routes/UserRouter";
 import OrgRouter from "./routes/OrgRouter";
 import AuthRouter from "./routes/AuthRouter";
 import SubOrgRouter from "./routes/SubOrgRouter";
-import EventsRouter from "./routes/EventsRouter";
-
 
 //registro de petciones del sistema
 import morgan from "morgan";
@@ -22,6 +20,9 @@ import config from "./config";
 
 // manejador de errores
 import errorHandler from "./middlewares/ErrorMiddleware";
+
+import swaggerUi from "swagger-ui-express";
+import swaggerSetUp from "./docs/swagger";
 
 // class de la configuracion del servidor
 class Server {
@@ -51,6 +52,8 @@ class Server {
         //registro de peticiones
         this.app.use(morgan('dev'));
 
+        this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSetUp))
+
         this.app.use(errorHandler);
     }
 
@@ -60,7 +63,6 @@ class Server {
         this.app.use('/Auth', AuthRouter) //ruta de Auth
         this.app.use('/Org', OrgRouter) //ruta de organizacion
         this.app.use('/SubOrg', SubOrgRouter) //ruta de subOrganizacion
-        this.app.use('/Event', EventsRouter) //ruta de eventos
     }
 
     //server

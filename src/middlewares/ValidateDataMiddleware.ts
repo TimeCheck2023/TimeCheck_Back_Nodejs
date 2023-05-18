@@ -5,7 +5,7 @@ import Joi from "joi";
 const validateDataMiddle = (schema: Joi.ObjectSchema) => (req: Request, res: Response, next: NextFunction) => {
   const data = req.body;
   const id = parseInt(req.params.id)  
-  id ? data.id = id : data;
+  id ? data.id = id : data;  
   const { error } = schema.validate(data)
   if (error) {
     return res.status(400).json({
