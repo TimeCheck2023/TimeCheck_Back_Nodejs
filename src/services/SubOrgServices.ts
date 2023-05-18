@@ -17,12 +17,10 @@ class SubOrg_Services implements SubOrg_interface {
           description_organization
         )
         .input("id_organizacion", sql.Int, id_organizacion);
-      const result = await request.execute(query.CreateSubOrganizacionRegister);
-      console.log(result);
+      await request.execute(query.CreateSubOrganizacionRegister);
       return "Organizacion insertada correctamente!!";
     } catch (error) {
       throw error
-      console.log("error:" + error)
     }
   }
 }
