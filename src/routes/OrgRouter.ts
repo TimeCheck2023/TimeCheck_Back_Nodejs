@@ -110,6 +110,7 @@ router.get('/:id', controller.getOrgId)
  *     404:
  *       description: El email o numero de documento ya se encuentra en el sistema
  */
+
 router.post('/register', validateDataMiddle(OrgSchemaR), controller.registerOrg)
 
 /**

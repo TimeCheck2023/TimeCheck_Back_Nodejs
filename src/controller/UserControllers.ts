@@ -25,6 +25,17 @@ class UsersController {
       });
   }
 
+
+  async getUserSubMiembroId(req: Request, res: Response) {
+    const id: number = parseInt(req.params.id)
+    services.getUserSubMiembroId(id)
+      .then((responde) => {
+        res.status(200).json({ message: responde })
+      }).catch((error) => {
+        res.status(404).json({ error: error.originalError.info.message })
+      });
+  }
+
   async registerUser(req: Request, res: Response) {
     const Users: Users_dto = req.body;
     services.createUser(Users)

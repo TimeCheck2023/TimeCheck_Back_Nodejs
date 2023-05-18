@@ -8,6 +8,13 @@ export interface Users_dto extends Auth_dto {
     address?: string;
     typeofpopulation?: string;
 }
+export interface Users_dto_sub_miembro extends Auth_dto {
+    id_miembro: number;
+    rol: number;
+    id_suborganizacion: number;
+    nombre_suborganizacion: string;
+    descripcion_suborganizacion?: string;
+}
 
 export type NotPassword = Omit<Users_dto, 'password'>
 export type NotPasswordIdentify = Omit<NotPassword, 'documentNumber'>

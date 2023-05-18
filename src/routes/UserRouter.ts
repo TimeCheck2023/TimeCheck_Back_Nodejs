@@ -64,6 +64,33 @@ const router = Router();
  *           type: number
  *         pendientes:
  *           type: number
+ * 
+ *    userGetMiembro:
+ *       type: object
+ *       properties:
+ *         nro_documento_usuario:
+ *           type: string
+ *         nombre_completo_usuario:
+ *           type: string
+ *         tipo_documento_usuario:
+ *           type: string
+ *         direccion_usuario:
+ *           type: string
+ *         tipo_poblacion_usuario:
+ *           type: string
+ *         correo_usuario:
+ *           type: string
+ *         id_miembro:
+ *           type: number
+ *         rol:
+ *           type: number
+ *         id_suborganizacion:
+ *           type: number
+ *         nombre_suborganizacion:
+ *           type: string
+ *         descripcion_suborganizacion:
+ *           type: string
+ *         
  *
  *    PutUser:
  *      type: object
@@ -136,6 +163,27 @@ router.get('/', controller.getUsers)
  *  
  */
 router.get("/:id", controller.getUserId);
+
+/**
+ * @swagger
+ * /user/SubOrgMiembro/{id}:
+ *  get:
+ *   summary: obtener los usuario que son miembros de una subOrganizacion
+ *   tags: [user]
+ *   parameters:
+ *     - $ref: '#/components/parameters/userId'
+ *   responses:
+ *     200:
+ *       description: get user id
+ *       content:
+ *         application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/userGetMiembro'
+ *     404:
+ *       description: La usuaria no fue encontrada
+ */
+
+router.get("/SubOrgMiembro/:id", controller.getUserSubMiembroId);
 
 /**
  * @swagger

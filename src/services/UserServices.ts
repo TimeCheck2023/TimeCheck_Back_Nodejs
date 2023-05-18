@@ -1,6 +1,6 @@
 import Users_interface from "../Interfaces/Users_interfaces";
 import query from "../database/query";
-import { NotPasswordIdentify, Users_Get_dto, Users_dto } from "../Dto/Users_dto";
+import { NotPasswordIdentify, Users_Get_dto, Users_dto, Users_dto_sub_miembro } from "../Dto/Users_dto";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
@@ -22,6 +22,17 @@ class user_service implements Users_interface {
       const request = pool.request()
       .input('nro_documento_usuario', sql.BigInt, documentNumber)
       const result = await request.execute(query.getUserId)
+      return result.recordset[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getUserSubMiembroId(id_suborganizacion: number): Promise<Users_dto_sub_miembro[] | unknown>{
+    try {
+      const request = pool.request()
+      .input('id_suborganizacion', sql.BigInt, id_suborganizacion)
+      const result = await request.execute(query.getUserSubOrgMiembro)
       return result.recordset[0];
     } catch (error) {
       throw error;

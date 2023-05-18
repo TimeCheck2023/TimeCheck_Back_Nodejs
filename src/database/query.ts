@@ -2,6 +2,7 @@
 const querys = {
     getUsers: "sp_ObtenerUsuarios",
     getUserId: "sp_ObtenerUsuario_id",
+    getUserSubOrgMiembro: "sp_ObtUsuariosMiembrosSubOrg",
     CreateUsersRegister: "sp_INSERT_USUARIO",
     UpdateUser: "sp_UpdateUsuario",
 
