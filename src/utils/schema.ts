@@ -16,6 +16,7 @@ export const userSchemaUpdate = Joi.object({
     id: Joi.number().required(),
     fullName: Joi.string(),
     address: Joi.string(),
+    typeofpopulation: Joi.string(),
     emailAddress: Joi.string().email()
 });
 

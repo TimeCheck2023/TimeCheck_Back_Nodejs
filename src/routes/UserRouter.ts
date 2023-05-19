@@ -90,20 +90,20 @@ const router = Router();
  *           type: string
  *         descripcion_suborganizacion:
  *           type: string
- *         
+ *
  *
  *    PutUser:
  *      type: object
  *      properties:
- *         nombre_completo_usuario:
+ *         fullName:
  *           type: string
- *         tipo_documento_usuario:
+ *         documentType:
  *           type: string
- *         correo_usuario:
+ *         emailAddress:
  *           type: string
- *         direccion_usuario:
+ *         address:
  *           type: string
- *         tipo_poblacion_usuario:
+ *         typeofpopulation:
  *           type: string
 
  *  parameters:
@@ -128,7 +128,7 @@ const router = Router();
  * @swagger
  *  /user:
  *   get:
- *    summary: obtener todos los usuarios
+ *    summary: obtener todos los usuarios del sistema
  *    tags: [user]
  *    responses:
  *      200:
@@ -147,7 +147,7 @@ router.get('/', controller.getUsers)
  * @swagger
  * /user/{id}:
  *  get:
- *   summary: obtener un usuario por id
+ *   summary: obtener un usuario por el id
  *   tags: [user]
  *   parameters:
  *     - $ref: '#/components/parameters/userId'
@@ -168,7 +168,7 @@ router.get("/:id", controller.getUserId);
  * @swagger
  * /user/SubOrgMiembro/{id}:
  *  get:
- *   summary: obtener los usuario que son miembros de una subOrganizacion
+ *   summary: obtener los usuario que son miembros de una subOrganizacion mandar id de la subOrganizacion
  *   tags: [user]
  *   parameters:
  *     - $ref: '#/components/parameters/userId'
@@ -189,7 +189,7 @@ router.get("/SubOrgMiembro/:id", controller.getUserSubMiembroId);
  * @swagger
  * /user/register:
  *  post:
- *   summary: create a new user
+ *   summary: registra un nuevo usuario al sistema
  *   tags: [user]
  *   requestBody:
  *     required: true
@@ -209,7 +209,7 @@ router.post("/register", validateDataMiddle(userSchemaR), controller.registerUse
  * @swagger
  * /user/update/{id}:
  *  put:
- *   summary: update user
+ *   summary: actualiza un usuario por el id del usuario
  *   tags: [user]
  *   parameters:
  *    - $ref: '#/components/parameters/userId'
@@ -223,7 +223,7 @@ router.post("/register", validateDataMiddle(userSchemaR), controller.registerUse
  *        description: Usuario actualizado correctamente
  *      404:
  *        description: el usuaria no fue encontrada 
- */  
+ */
 router.put("/update/:id", validateDataMiddle(userSchemaUpdate), controller.updateUser);
 
 router.delete("/delete/:id", controller.deleteUser);

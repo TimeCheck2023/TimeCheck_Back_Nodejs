@@ -13,7 +13,12 @@ const querys = {
 
 
     CreateSubOrganizacionRegister: "sp_INSERT_SUBORGANIZACION",
+    getSubOrgId: "sp_ObtenerSubOrganizacionId",
+    updateSubOrgId: "sp_UpdateSuborganizacion",
+
+    
     VeryUsersLogin: "sp_autenticar_usuario",
+    
     getEvent: "sp_ObtenerEventos",
 }
 

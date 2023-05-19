@@ -17,7 +17,6 @@ class OrgController {
 
     registerOrg(req: Request, res: Response) {
         const data: Org_dto = req.body;
-        console.log(data);
         services.createOrganization(data)
             .then((responde) => {
                 res.status(200).json({ message: responde });
@@ -33,7 +32,7 @@ class OrgController {
             .then((responde) => {
                 res.status(200).json({ message: responde });
             }).catch((error) => {
-                res.status(400).json({ error: error });
+                res.status(400).json({ error: error.originalError.info.message });
             })
     }
 

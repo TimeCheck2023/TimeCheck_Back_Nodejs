@@ -76,7 +76,7 @@ const router = Router();
  * @swagger
  *  /org/{id}:
  *   get:
- *    summary: obtener la organizacion por id
+ *    summary: obtener los datos de la organizacion por el id de la organizacion
  *    tags: [organizacion]
  *    parameters:
  *      - $ref: '#components/parameters/org_id'
@@ -96,7 +96,7 @@ router.get('/:id', controller.getOrgId)
  * @swagger
  * /Org/register:
  *  post:
- *   summary: Crear una organization
+ *   summary: Crear una organizacion
  *   tags: [organizacion]
  *   requestBody:
  *     required: true
@@ -117,7 +117,7 @@ router.post('/register', validateDataMiddle(OrgSchemaR), controller.registerOrg)
  * @swagger
  * /org/update/{id}:
  *  put:
- *   summary: Update organization
+ *   summary: actualiza la organizacion por el id de la organizacion
  *   tags: [organizacion]
  *   parameters:
  *    - $ref: '#/components/parameters/org_id'

@@ -6,8 +6,8 @@ import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 
 class user_service implements Users_interface {
-  
-  async getUsers(): Promise<Users_Get_dto[] | unknown>{
+
+  async getUsers(): Promise<Users_Get_dto[] | unknown> {
     try {
       const request = pool.request()
       const result = await request.execute(query.getUsers)
@@ -16,11 +16,11 @@ class user_service implements Users_interface {
       throw error;
     }
   }
-  
-  async getUserId(documentNumber: number): Promise<Users_Get_dto[] | unknown>{
+
+  async getUserId(documentNumber: number): Promise<Users_Get_dto[] | unknown> {
     try {
       const request = pool.request()
-      .input('nro_documento_usuario', sql.BigInt, documentNumber)
+        .input('nro_documento_usuario', sql.BigInt, documentNumber)
       const result = await request.execute(query.getUserId)
       return result.recordset[0];
     } catch (error) {
@@ -28,10 +28,10 @@ class user_service implements Users_interface {
     }
   }
 
-  async getUserSubMiembroId(id_suborganizacion: number): Promise<Users_dto_sub_miembro[] | unknown>{
+  async getUserSubMiembroId(id_suborganizacion: number): Promise<Users_dto_sub_miembro[] | unknown> {
     try {
       const request = pool.request()
-      .input('id_suborganizacion', sql.BigInt, id_suborganizacion)
+        .input('id_suborganizacion', sql.BigInt, id_suborganizacion)
       const result = await request.execute(query.getUserSubOrgMiembro)
       return result.recordset[0];
     } catch (error) {
@@ -55,18 +55,19 @@ class user_service implements Users_interface {
     }
   }
 
-  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown>{
+  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown> {
+    console.log(emailAddress, fullName, documentType, address, typeofpopulation);
+
     try {
       const request = pool.request()
-      .input('nombre_completo_usuario', fullName)
-      .input('tipo_documento_usuario', documentType)
-      .input('direccion_usuario', address)
-      .input('tipo_poblacion', typeofpopulation)
-      .input('correo_usuario', emailAddress)
-      .input('nro_documento_usuario', documentNumber);
+        .input('nombre_completo_usuario', fullName)
+        .input('tipo_documento_usuario', documentType)
+        .input('direccion_usuario', address)
+        .input('tipo_poblacion', typeofpopulation)
+        .input('correo_usuario', emailAddress)
+        .input('nro_documento_usuario', documentNumber);
 
-      const result = await request.execute(query.UpdateUser)
-      console.log(result)
+      await request.execute(query.UpdateUser)
       return 'Actualizacion correctamente'
     } catch (error) {
       throw error;
