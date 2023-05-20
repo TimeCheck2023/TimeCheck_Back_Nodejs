@@ -5,6 +5,15 @@ const services = new SubOrg_Services();
 
 class SubOrgControllers {
 
+  async getSubOrg(req: Request, res: Response) {
+    await services.getSubOrg()
+      .then((responde) => {
+        res.status(200).json({ message: responde });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: error.originalError.info.message });
+      });
+  }
   async getSubOrgId(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     await services.getSubOrgId(id)

@@ -8,6 +8,16 @@ import { encryptPass } from "../utils/bcrypt";
 
 class Org_service implements Org_interface {
 
+    async getOrg(): Promise<Org_id_telefono_dto[] | unknown> {
+        try {
+            const request = pool.request()
+            const result = await request.execute(query.getOrg)
+            return result.recordset;
+        } catch (error) {
+            throw error
+        }
+    }
+
     async getOrgId(id_organizacion: number): Promise<Org_id_telefono_dto[] | unknown> {
         try {
             const request = pool.request()
@@ -49,6 +59,17 @@ class Org_service implements Org_interface {
             throw error
         }
 
+    }
+
+    async deleteOrganizationId(id_organizacion: number): Promise<string | unknown> {
+        try {
+            const request = pool.request()
+                .input('nro_documento', sql.Int, id_organizacion)
+            const result = await request.execute(query.deleteOrgId)
+            return result.recordset[0].Mensaje
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

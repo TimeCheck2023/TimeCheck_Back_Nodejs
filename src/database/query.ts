@@ -5,15 +5,19 @@ const querys = {
     getUserSubOrgMiembro: "sp_ObtUsuariosMiembrosSubOrg",
     CreateUsersRegister: "sp_INSERT_USUARIO",
     UpdateUser: "sp_UpdateUsuario",
-
-
+    deleteUserId: "sp_DeleteUsuario",
+    
+    
+    getOrg: "sp_ObtenerOrg",
     getOrgId: "sp_ObtenerOrganizacionId",
     CreateOrganizacionRegister: "sp_INSERT_ORGANIZACION",
     UpdateOrgId: "sp_UpdateOrgId",
+    deleteOrgId: "sp_DeleteOrg",
 
 
-    CreateSubOrganizacionRegister: "sp_INSERT_SUBORGANIZACION",
+    getSubOrg: "sp_ObtenerSubOrgCreated",
     getSubOrgId: "sp_ObtenerSubOrganizacionId",
+    CreateSubOrganizacionRegister: "sp_INSERT_SUBORGANIZACION",
     updateSubOrgId: "sp_UpdateSuborganizacion",
 
     

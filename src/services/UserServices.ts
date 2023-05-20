@@ -73,6 +73,18 @@ class user_service implements Users_interface {
       throw error;
     }
   }
+
+  async deleteUserId(nro_documento_usuario: number) {
+    try {
+      const request = pool.request()
+        .input('nro_documento_usuario', sql.BigInt, nro_documento_usuario)
+      const result = await request.execute(query.deleteUserId)
+      console.log(result);
+    } catch (error) {
+      throw error;
+    }
+
+  }
 }
 
 

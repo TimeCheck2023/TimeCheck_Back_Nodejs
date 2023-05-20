@@ -7,4 +7,5 @@ export default interface Users_interface {
   UpdateUsers(data: Users_dto, documentNumber: number): Promise<string | unknown>;
   getUserId(documentNumber: number): Promise<NotPassword[] | unknown>;
   getUsers(documentNumber: number): Promise<Users_Get_dto[] | unknown>;
+  deleteUserId(documentNumber: number): Promise<string | unknown>;
 }

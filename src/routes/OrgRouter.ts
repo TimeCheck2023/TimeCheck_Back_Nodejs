@@ -71,6 +71,25 @@ const router = Router();
  *  description: organizacion endpoint
  */
 
+/**
+ * @swagger
+ *  /org:
+ *   get:
+ *    summary: obtiene todas las organizacion de nuestro sistema
+ *    tags: [organizacion]
+ *    responses:
+ *      200:
+ *        description: Este sera el schema que obtendras
+ *        content:
+ *          application/json:
+ *            schema: 
+ *              $ref: '#/components/schemas/getOrganizations'
+ *      400:
+ *        description: La orgizacion no fue encontrada
+ */
+
+router.get('/', controller.getOrg)
+
 
 /**
  * @swagger
@@ -133,5 +152,24 @@ router.post('/register', validateDataMiddle(OrgSchemaR), controller.registerOrg)
  *       description: la organizacion no fue encontrada 
  */
 router.put('/update/:id', validateDataMiddle(OrgSchemaR), controller.updateOrgId)
+
+
+/**
+ * @swagger
+ * /org/delete/{id}:
+ *  delete:
+ *    summary: eliminara una organizacions por id
+ *    tags: [organizacion]
+ *    parameters:
+ *      - $ref: '#/components/parameters/org_id'
+ *    responses:
+ *      200:
+ *        description: organization actualizado correctamente
+ *      404:
+ *        description: la organizacion no fue encontrada 
+ *   
+ */
+router.delete('/delete/:id', controller.deleteOrgId)
+
 
 export default router;

@@ -1,11 +1,21 @@
 import SubOrg_interface from "../Interfaces/SubOrg_interface";
-import { SubOrg, SubOrgId, SubOrgIdSubOrg } from "../Dto/SubOrg_dto";
+import { SubOrg, SubOrgCreated, SubOrgId, SubOrgIdSubOrg } from "../Dto/SubOrg_dto";
 import sql from "mssql";
 import query from "../database/query";
 import pool from "../database/Connection";
 
 class SubOrg_Services implements SubOrg_interface {
 
+  async getSubOrg(): Promise<SubOrgCreated[] | unknown> {
+    try {
+      const request = pool.request()
+      const result = await request.execute(query.getSubOrg);
+      return result.recordset;
+    } catch (error) {
+      throw error
+    }
+  }
+  
   async getSubOrgId(id_organizacion: number): Promise<SubOrgIdSubOrg[] | unknown> {
     try {
       const request = pool.request()

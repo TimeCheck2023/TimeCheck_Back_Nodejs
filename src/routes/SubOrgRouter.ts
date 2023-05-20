@@ -9,6 +9,31 @@ const router = Router();
  * @swagger
  * components:
  *  schemas:
+ *    getSubOrg:
+ *      types: object
+ *      properties:
+ *        id_organización: 
+ *          types: number
+ *        organization_name: 
+ *          types: string
+ *        address_organization: 
+ *          types: string
+ *        email_organization:
+ *          types: string
+ *        id_telefono: 
+ *          types: number
+ *        numero_telefono: 
+ *          types: number
+ *        id_suborganizacion:
+ *           types: number
+ *        name_organization: 
+ *           types: string
+ *        description_organization:
+ *           types: string 
+ *        id_organizacion2:
+ *           types: number
+ * 
+ * 
  *    postSubOrg:
  *      types: object
  *      properties:
@@ -48,9 +73,26 @@ const router = Router();
 
 /**
  * @swagger
+ *  /SubOrg:
+ *   get:
+ *    summary: Aca podras ver las suborganizaciones existentes y creadas por su respectiva organizacion
+ *    tags: [subOrganization]
+ *    responses:
+ *      200:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#components/schemas/getSubOrg'
+ *      404:
+ *        description: no tienes suborganizacion creada
+ */
+router.get('/', controller.getSubOrg)
+
+/**
+ * @swagger
  *  /SubOrg/{id}:
  *   get:
- *    summary: traera todos las Suborganization que tiene una organizacion por el id de una organizations
+ *    summary: para traer las suborganizaciones que existen y a que organizacion estan enlazadas vizualiza el endpoint que trae todas las suborganizaciones y mandamos el id de una organizacion
  *    tags: [subOrganization]
  *    parameters:
  *      - $ref: '#/components/parameters/subOrg_id'

@@ -226,6 +226,21 @@ router.post("/register", validateDataMiddle(userSchemaR), controller.registerUse
  */
 router.put("/update/:id", validateDataMiddle(userSchemaUpdate), controller.updateUser);
 
+/**
+ * @swagger
+ * /user/delete/{id}:
+ *  delete:
+ *   summary: eliminara un usuario por su id
+ *   tags: [user]
+ *   parameters:
+ *    - $ref: '#/components/parameters/userId'
+ *   responses:
+ *     200:
+ *       description: Usuario eliminado correctamente
+ *     404:
+ *       description: el usuaria no fue encontrada 
+ */
+
 router.delete("/delete/:id", controller.deleteUser);
 // router.get("/User", authMiddleware, controller.getUser);
 
