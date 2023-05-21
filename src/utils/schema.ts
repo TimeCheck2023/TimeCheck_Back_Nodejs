@@ -4,7 +4,7 @@ import Joi from "joi";
 
 export const userSchemaR = Joi.object({
     documentType: Joi.string().required(),
-    documentNumber: Joi.string().required(),
+    documentNumber: Joi.number().required(),
     fullName: Joi.string().required(),
     address: Joi.string(),
     emailAddress: Joi.string().email().required(),
