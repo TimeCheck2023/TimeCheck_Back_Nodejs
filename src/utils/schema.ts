@@ -12,12 +12,12 @@ export const userSchemaR = Joi.object({
 });
 
 export const userSchemaUpdate = Joi.object({
-    documentType: Joi.string(),
     id: Joi.number().required(),
-    fullName: Joi.string(),
-    address: Joi.string(),
-    typeofpopulation: Joi.string(),
-    emailAddress: Joi.string().email()
+    documentType: Joi.string().allow(null),
+    fullName: Joi.string().allow(null),
+    address: Joi.string().allow(null),
+    typeofpopulation: Joi.string().allow(null),
+    emailAddress: Joi.string().allow(null).email()
 });
 
 export const OrgSchemaR = Joi.object({
