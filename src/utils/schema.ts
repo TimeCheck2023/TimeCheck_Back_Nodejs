@@ -13,11 +13,11 @@ export const userSchemaR = Joi.object({
 
 export const userSchemaUpdate = Joi.object({
     id: Joi.number().required(),
-    documentType: Joi.string().allow(null),
-    fullName: Joi.string().allow(null),
-    address: Joi.string().allow(null),
-    typeofpopulation: Joi.string().allow(null),
-    emailAddress: Joi.string().allow(null).email()
+    documentType: Joi.string().allow(null, ''),
+    fullName: Joi.string().allow(null, ''),
+    address: Joi.string().allow(null, ''),
+    typeofpopulation: Joi.string().allow(null, ''),
+    emailAddress: Joi.string().email().required()
 });
 
 export const OrgSchemaR = Joi.object({
