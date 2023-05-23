@@ -33,7 +33,8 @@ class user_service implements Users_interface {
       const request = pool.request()
         .input('id_suborganizacion', sql.BigInt, id_suborganizacion)
       const result = await request.execute(query.getUserSubOrgMiembro)
-      return result.recordset[0];
+      console.log(result.recordset)
+      return result.recordset;
     } catch (error) {
       throw error;
     }
@@ -56,8 +57,6 @@ class user_service implements Users_interface {
   }
 
   async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown> {
-    console.log(emailAddress, fullName, documentType, address, typeofpopulation);
-
     try {
       const request = pool.request()
         .input('nombre_completo_usuario', fullName)
