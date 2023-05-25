@@ -16,7 +16,7 @@ const swaggerDefinition: OAS3Definition = {
             url: 'http://localhost:4000',
         },
         {
-            url: 'https://timecheckbacknodejs-production.up.railway.app',
+            url: 'https://timecheck.up.railway.app',
         }
     ],
 }
