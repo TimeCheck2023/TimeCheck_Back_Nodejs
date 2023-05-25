@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/nodemailer": "^6.4.8",
     "bcrypt": "5.1.0",
     "cors": "2.8.5",
     "dotenv": "16.0.3",
@@ -20,6 +21,7 @@
     "jsonwebtoken": "9.0.0",
     "morgan": "1.10.0",
     "mssql": "9.1.1",
+    "nodemailer": "6.9.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3"
   },

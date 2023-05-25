@@ -38,9 +38,12 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
                 .input('numero_telefono', sql.Int, numero_telefono)
-            await request.execute(query.CreateOrganizacionRegister);
+            const result =  await request.execute(query.CreateOrganizacionRegister);
+            console.log(result);
             return 'Organizacion insertada correctamente!!';
         } catch (error) {
+            console.log("error");
+            // console.log(error);
             throw error;
         }
     }

@@ -10,7 +10,7 @@ class Auth_service {
             const request = pool.request()
                 .input("correo_usu_org", sql.VarChar(255), emailAddress)
             const responde = await request.execute(query.VeryUsersLogin)
-            if (!await macthPass(password, responde.recordset[0].contraseña)) throw new Error("usuario o contraseña incorrect");
+            if (!await macthPass(password, responde.recordset[0].contraseña)) throw new Error("usuario o contraseña incorrecto");
             const token = await CreateToken(responde.recordset[0])
             return token;
         } catch (error) {

@@ -25,8 +25,7 @@ export const macthPass = async (
 
 export const CreateToken = async (payload: tokenData) => {
   payload.contraseña = 'te engañe raton'
-  // exp: Math.floor(Date.now() / 1000) + (60 * 60) // valido de un dia
-  //  // creamos el token con jwt con una expiracion, los datos y la palabra secreta
+  // creamos el token con jwt con una expiracion, los datos y la palabra secreta
   const token = jwt.sign(
     {
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // valido hasta 30

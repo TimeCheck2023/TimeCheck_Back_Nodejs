@@ -33,8 +33,10 @@ class Server {
 
     //constructor
     constructor() {
+
         //aca iniciamos express
         this.app = express();
+        
         // condig de port
         this.port = config.PORT || 3000;
 
