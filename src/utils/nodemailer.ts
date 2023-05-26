@@ -21,27 +21,32 @@ let transporter = nodemailer.createTransport({
 
 const sendEmail = async (email: string, subject: string, html: string) => {
   try {
-      // send mail with defined transport object
-      await transporter.sendMail({
-        from: `"MHcode 👻" <${mail.user}>`, // sender address
-        to: email, // list of receivers
-        subject, // Subject line
-        text: "Hello world?", // plain text body
-        html, // html body
-      });
+    // send mail with defined transport object
+    await transporter.sendMail({
+      from: `"MHcode 👻" <${mail.user}>`, // sender address
+      to: email, // list of receivers
+      subject, // Subject line
+      text: "Hello world?", // plain text body
+      html, // html body
+    });
   } catch (error) {
     console.log("Algo no va bien con el email ", error);
   }
 
 };
 
-const getTemplate = (name: string, email: string) => {
+const getTemplate = (name: string) => {
+  const randomNumber = Math.floor(1000 + Math.random() * 9000);
   return `
-    <h1>User Information</h1>
-    <ul>
-        <li>Username: ${name} </li>
-        <li>User Email: ${email} </li>
-    </ul>
+  ¡Hola ${name}!
+  
+  Gracias por registrarte en nuestra aplicación de eventos. Para verificar tu cuenta, haz clic en el siguiente enlace:
+  
+  <a href="https://tudominio.com/verificar?codigo=${randomNumber}">Verificar cuenta</a>
+  
+  Si no puedes hacer clic en el enlace, cópialo y pégalo en la barra de direcciones de tu navegador.
+  
+  ¡Disfruta de nuestros eventos!
 `;
 };
 

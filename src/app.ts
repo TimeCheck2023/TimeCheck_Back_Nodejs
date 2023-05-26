@@ -3,6 +3,8 @@ import express, { Application } from "express";
 //importo la conexion a la base de datos
 import './database/Connection'
 
+// import './utils/tareas_node_cron'
+
 //importo las rutas del sistema
 import usersRouter from "./routes/UserRouter";
 import OrgRouter from "./routes/OrgRouter";

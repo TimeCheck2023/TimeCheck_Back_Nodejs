@@ -1,11 +1,6 @@
 import Users_interface from "../Interfaces/Users_interfaces";
 import query from "../database/query";
-import {
-  NotPasswordIdentify,
-  Users_Get_dto,
-  Users_dto,
-  Users_dto_sub_miembro,
-} from "../Dto/Users_dto";
+import {NotPasswordIdentify, Users_Get_dto,Users_dto, Users_dto_sub_miembro} from "../Dto/Users_dto";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
@@ -66,15 +61,15 @@ class user_service implements Users_interface {
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), newPassword);
       await request.execute(query.CreateUsersRegister);
-      const template = getTemplate(fullName, emailAddress);
-      await sendEmail(emailAddress, "Este es un email de prueba", template);
+      const template = getTemplate(fullName);
+      await sendEmail(emailAddress, "Verificación de cuenta - Aplicación de eventos", template);
       return "Gracias por registrarse!!!";
     } catch (error) {
       throw error;
     }
   }
 
-  async UpdateUsers({emailAddress,fullName,documentType,address,typeofpopulation}: NotPasswordIdentify,documentNumber: number): Promise<string | unknown> {
+  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown> {
     try {
       const request = pool
         .request()
