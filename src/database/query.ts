@@ -21,6 +21,7 @@ const querys = {
   updateSubOrgId: "sp_UpdateSuborganizacion",
 
   VeryUsersLogin: "sp_autenticar_usuario",
+  VerificarEmail: "sp_Verificacion_email",
 };
 
 export default querys;

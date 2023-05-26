@@ -17,6 +17,16 @@ class Auth_service {
             throw error
         }
     }
+    async verificacionUser(codigo: number): Promise<string | unknown> {
+        try {
+            const request = pool.request()
+            .input("codigo", sql.Int, codigo)
+            const responde = await request.execute(query.VerificarEmail)
+            return responde;
+        } catch (error) {
+            throw error
+        }
+    }
 
 }
 

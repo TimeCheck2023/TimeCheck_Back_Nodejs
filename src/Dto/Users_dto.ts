@@ -7,6 +7,7 @@ export interface Users_dto extends Auth_dto {
     fullName: string;
     address?: string;
     typeofpopulation?: string;
+    device: string;
 }
 export interface Users_dto_sub_miembro extends Auth_dto {
     id_miembro: number;

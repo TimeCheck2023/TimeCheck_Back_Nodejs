@@ -14,6 +14,16 @@ class AuthController {
         res.status(400).json({ error: error.message })
       })
   }
+  
+  async verificacionUser(req: Request, res: Response) {
+    const codigo: number = req.body.codigo;
+    await services.verificacionUser(codigo)
+      .then((responde) => {
+        res.status(200).json({ message: responde })
+      }).catch((error) => {
+        res.status(400).json({ error: error.message })
+      })
+  }
 
 }
 

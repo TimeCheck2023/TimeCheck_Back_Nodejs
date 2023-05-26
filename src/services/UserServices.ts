@@ -1,10 +1,16 @@
 import Users_interface from "../Interfaces/Users_interfaces";
 import query from "../database/query";
-import {NotPasswordIdentify, Users_Get_dto,Users_dto, Users_dto_sub_miembro} from "../Dto/Users_dto";
+import {
+  NotPasswordIdentify,
+  Users_Get_dto,
+  Users_dto,
+  Users_dto_sub_miembro,
+} from "../Dto/Users_dto";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 import { getTemplate, sendEmail } from "../utils/nodemailer";
+import generarCodigoAleatorio from "../utils/codigoRandom";
 
 class user_service implements Users_interface {
   async getUsers(): Promise<Users_Get_dto[] | unknown> {
@@ -29,15 +35,12 @@ class user_service implements Users_interface {
     }
   }
 
-  async getUserSubMiembroId(
-    id_suborganizacion: number
-  ): Promise<Users_dto_sub_miembro[] | unknown> {
+  async getUserSubMiembroId(id_suborganizacion: number): Promise<Users_dto_sub_miembro[] | unknown> {
     try {
       const request = pool
         .request()
         .input("id_suborganizacion", sql.BigInt, id_suborganizacion);
       const result = await request.execute(query.getUserSubOrgMiembro);
-      console.log(result.recordset);
       return result.recordset;
     } catch (error) {
       throw error;
@@ -50,26 +53,38 @@ class user_service implements Users_interface {
     documentNumber,
     documentType,
     password,
+    device
   }: Users_dto): Promise<string | unknown> {
     try {
       const newPassword = await encryptPass(password);
+      const codigoAleatorio = generarCodigoAleatorio();
       const request = pool
         .request()
         .input("tipo_documento_usuario", sql.VarChar(255), documentType)
         .input("nro_documento_usuario", sql.BigInt, documentNumber)
         .input("nombre_completo_usuario", sql.VarChar(255), fullName)
         .input("correo_usuario", sql.VarChar(255), emailAddress)
-        .input("contraseña_usuario", sql.VarChar(2000), newPassword);
-      await request.execute(query.CreateUsersRegister);
-      const template = getTemplate(fullName);
-      await sendEmail(emailAddress, "Verificación de cuenta - Aplicación de eventos", template);
+        .input("contraseña_usuario", sql.VarChar(2000), newPassword)
+        .input("codigo", sql.Int, codigoAleatorio);    
+        await request.execute(query.CreateUsersRegister);
+      const template = getTemplate(fullName, codigoAleatorio, device);
+      await sendEmail(emailAddress, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);
       return "Gracias por registrarse!!!";
     } catch (error) {
       throw error;
     }
   }
 
-  async UpdateUsers({ emailAddress, fullName, documentType, address, typeofpopulation }: NotPasswordIdentify, documentNumber: number): Promise<string | unknown> {
+  async UpdateUsers(
+    {
+      emailAddress,
+      fullName,
+      documentType,
+      address,
+      typeofpopulation,
+    }: NotPasswordIdentify,
+    documentNumber: number
+  ): Promise<string | unknown> {
     try {
       const request = pool
         .request()
@@ -92,7 +107,7 @@ class user_service implements Users_interface {
         .request()
         .input("nro_documento_usuario", sql.BigInt, nro_documento_usuario);
       const result = await request.execute(query.deleteUserId);
-      return result.recordset[0].Mensaje
+      return result.recordset[0].Mensaje;
     } catch (error) {
       throw error;
     }

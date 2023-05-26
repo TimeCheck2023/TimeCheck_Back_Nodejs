@@ -30,6 +30,8 @@ const router = Router();
  *          type: string
  *        password:
  *          type: string
+ *        device:
+ *          type: string
  *      required:
  *        - documentType
  *        - documentNumber
@@ -37,6 +39,7 @@ const router = Router();
  *        - address
  *        - emailAddress
  *        - password
+ *        - device
  *      example:
  *        documentNumber: '12354789' 
  *        documentType: cc | tl | 
@@ -44,6 +47,7 @@ const router = Router();
  *        address: carrera | barrio | depa
  *        emailAddress: example@example.com
  *        password: Pepito123
+ *        device: pc || movil
  * 
  *    userGet:
  *       type: object

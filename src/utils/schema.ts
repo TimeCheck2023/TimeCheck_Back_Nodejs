@@ -9,6 +9,7 @@ export const userSchemaR = Joi.object({
   address: Joi.string(),
   emailAddress: Joi.string().email().required(),
   password: Joi.string().required(),
+  device: Joi.string().required(),
 });
 
 export const userSchemaUpdate = Joi.object({

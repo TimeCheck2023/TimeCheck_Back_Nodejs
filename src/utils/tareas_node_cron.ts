@@ -1,6 +1,5 @@
 import cron from "node-cron";
 import pool from "../database/Connection";
-import sql from "mssql";
 
 const deleteNullUsers = async () => {
     try {
