@@ -39,6 +39,8 @@ const router = Router();
  *          types: string
  *        numero_telefono: 
  *          types: number
+ *        device:
+ *          type: string
  *    
  *    putOrganizations:
  *      types: object

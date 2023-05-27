@@ -5,6 +5,7 @@ import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
 import generarCodigoAleatorio from "../utils/codigoRandom";
+import { getTemplate, sendEmail } from "../utils/nodemailer";
 
 
 class Org_service implements Org_interface {
@@ -30,7 +31,7 @@ class Org_service implements Org_interface {
         }
     }
 
-    async createOrganization({ organization_name, address_organization, email_organization, organization_password, numero_telefono }: Org_dto): Promise<string | unknown> {
+    async createOrganization({ organization_name, address_organization, email_organization, organization_password, numero_telefono, device }: Org_dto): Promise<string | unknown> {
         const newPassword = await encryptPass(organization_password)
         const codigoAleatorio = generarCodigoAleatorio();
         try {
@@ -40,9 +41,10 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
                 .input('numero_telefono', sql.Int, numero_telefono)
-                .input("codigo", sql.Int, codigoAleatorio);    
-            const result =  await request.execute(query.CreateOrganizacionRegister);
-            console.log(result);
+                .input("codigo", sql.Int, codigoAleatorio);
+            await request.execute(query.CreateOrganizacionRegister);
+            const template = getTemplate(organization_name, codigoAleatorio, device);
+            await sendEmail(email_organization, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);
             return 'Organizacion insertada correctamente!!';
         } catch (error) {
             console.log("error");
