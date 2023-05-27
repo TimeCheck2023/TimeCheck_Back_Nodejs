@@ -28,6 +28,7 @@ export const OrgSchemaR = Joi.object({
   email_organization: Joi.string().email().required(),
   organization_password: Joi.string(),
   numero_telefono: Joi.number().required(),
+  device: Joi.string().required(),
 });
 
 export const SubOrgSchemaR = Joi.object({
