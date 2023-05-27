@@ -4,6 +4,7 @@ import query from "../database/query";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";
+import generarCodigoAleatorio from "../utils/codigoRandom";
 
 
 class Org_service implements Org_interface {
@@ -31,6 +32,7 @@ class Org_service implements Org_interface {
 
     async createOrganization({ organization_name, address_organization, email_organization, organization_password, numero_telefono }: Org_dto): Promise<string | unknown> {
         const newPassword = await encryptPass(organization_password)
+        const codigoAleatorio = generarCodigoAleatorio();
         try {
             const request = pool.request()
                 .input('nombre_organizacion', sql.VarChar(250), organization_name)
@@ -38,6 +40,7 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
                 .input('numero_telefono', sql.Int, numero_telefono)
+                .input("codigo", sql.Int, codigoAleatorio);    
             const result =  await request.execute(query.CreateOrganizacionRegister);
             console.log(result);
             return 'Organizacion insertada correctamente!!';
