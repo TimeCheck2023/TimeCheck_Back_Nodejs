@@ -40,15 +40,13 @@ class Org_service implements Org_interface {
                 .input('direccion_organizacion', sql.VarChar(250), address_organization)
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
-                .input('numero_telefono', sql.Int, numero_telefono)
+                .input('numero_telefono', sql.BigInt, numero_telefono)
                 .input("codigo", sql.Int, codigoAleatorio);
             await request.execute(query.CreateOrganizacionRegister);
             const template = getTemplate(organization_name, codigoAleatorio, device);
             await sendEmail(email_organization, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);
             return 'Organizacion insertada correctamente!!';
         } catch (error) {
-            console.log("error");
-            // console.log(error);
             throw error;
         }
     }
