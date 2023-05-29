@@ -3,10 +3,10 @@ import config from '../config'
 
 // configuracion de la conexion a sql server
 const configOptions = {
-  user: config.SQL_USER,
-  password: config.SQL_PASSWORD,
-  server: config.SQL_SERVER,
-  database: config.SQL_DATABASE,
+  user: config.SQL_USER as string,
+  password: config.SQL_PASSWORD as string,
+  server: config.SQL_SERVER as string,
+  database: config.SQL_DATABASE as string,
   options: {
     encrypt: true, // for azure
     trustServerCertificate: true // change to true for local dev / self-signed certs

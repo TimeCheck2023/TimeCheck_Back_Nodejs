@@ -1,10 +1,11 @@
-
 import express, { Application } from "express";
+import http from "http";
+import { Server as WebSocketServer } from "socket.io";
 
 //importo la conexion a la base de datos
 import './database/Connection'
 
-// import './utils/tareas_node_cron'
+// import './utils/node_cron'
 
 //importo las rutas del sistema
 import usersRouter from "./routes/UserRouter";
@@ -24,14 +25,19 @@ import config from "./config";
 // manejador de errores
 import errorHandler from "./middlewares/ErrorMiddleware";
 
+// para crear la configuracion y iniciacion del swagger
 import swaggerUi from "swagger-ui-express";
 import swaggerSetUp from "./docs/swagger";
+
+// archivo del sockets
+import { Socket_io } from "./sockets/socket";
 
 // class de la configuracion del servidor
 class Server {
 
     // atributos
     app: Application;
+    server: http.Server;
     port: string | number;
 
     //constructor
@@ -39,8 +45,11 @@ class Server {
 
         //aca iniciamos express
         this.app = express();
-        
-        // condig de port
+
+        // aca le pasamos la configuracion de express al servidor de http 
+        this.server = http.createServer(this.app);
+
+        // config de port
         this.port = config.PORT || 3000;
 
         //medtodos iniciales
@@ -50,15 +59,20 @@ class Server {
 
     // middleware
     middleware() {
-        // Cors
+
+        // Cors mecanismo  de seguridad para restingir o permitir las solicitudes de recursos
         this.app.use(cors());
+
         // lectura de Body
         this.app.use(express.json());
+
         //registro de peticiones
         this.app.use(morgan('dev'));
 
+        //uso y config de swgger 
         this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSetUp))
 
+        //uso del manejador de errores del servidor 
         this.app.use(errorHandler);
     }
 
@@ -70,11 +84,17 @@ class Server {
         this.app.use('/SubOrg', SubOrgRouter) //ruta de subOrganizacion
     }
 
+
+
     //server
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(`server listening on port ${this.port}`);
         });
+
+        const io = new WebSocketServer(this.server);
+        const socket_io = new Socket_io(io)
+        socket_io.configureSocketEvents()
     }
 }
 

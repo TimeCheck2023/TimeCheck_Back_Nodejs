@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
+import config from "../config";
+
 
 const mail = {
-  user: "timecheckenterprise@gmail.com",
-  pass: "ngkacpoowyotegfx",
+  user: config.USEREMAIL,
+  pass: config.PASSEMAIL,
 };
 
 // create reusable transporter object using the default SMTP transport
