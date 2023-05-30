@@ -93,8 +93,8 @@ class Server {
         });
 
         const io = new WebSocketServer(this.server);
-        const socket_io = new Socket_io(io)
-        socket_io.configureSocketEvents()
+        new Socket_io(io)
+        // socket_io.configureSocketEvents()
     }
 }
 

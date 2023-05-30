@@ -22,6 +22,10 @@ const querys = {
 
   VeryUsersLogin: "sp_autenticar_usuario",
   VerificarEmail: "sp_Verificacion_email",
+
+
+  getComments: "sp_ObtenerComentarios",
+  addComments: "sp_InsertComment"
 };
 
 export default querys;
