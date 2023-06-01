@@ -46,7 +46,6 @@ export class Socket_io {
                 .input('id_evento4', sql.Int, id_evento4)
             const result = await request.execute(querys.getComments)
             socket.emit('resultComments', result.recordset)
-            // console.log(result.recordset);
         } catch (error) {
             console.log(error);
         }
@@ -56,10 +55,9 @@ export class Socket_io {
         try {
             const request = pool.request()
                 .input('id_evento4', sql.Int, id_evento4)
-                .input('comentario', sql.VarChar(250), comentario)
+                .input('comentario', sql.NVarChar(sql.MAX), comentario)
                 .input('nro_documento_usuario', sql.VarChar(250), nro_documento_usuario)
             await request.execute(querys.addComments);
-            // console.log(result);
             this.instance.getComments(socket, id_evento4);
         } catch (error) {
             console.log(error);
