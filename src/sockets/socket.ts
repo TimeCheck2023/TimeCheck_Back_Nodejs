@@ -30,8 +30,6 @@ export class Socket_io {
                 this.getComments(socket, id_evento4)
             })
             socket.on('addComment', (comment: CommentPos) => {
-                console.log(comment);
-
                 this.addComment(socket, comment)
             })
             // socket.on('deleteComment', (commentId: number) =>{
@@ -45,7 +43,7 @@ export class Socket_io {
             const request = pool.request()
                 .input('id_evento4', sql.Int, id_evento4)
             const result = await request.execute(querys.getComments)
-            socket.emit('resultComments', result.recordset)
+            this.io.emit('resultComments', result.recordset)
         } catch (error) {
             console.log(error);
         }
