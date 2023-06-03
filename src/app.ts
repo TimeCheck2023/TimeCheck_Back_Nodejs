@@ -92,7 +92,11 @@ class Server {
             console.log(`server listening on port ${this.port}`);
         });
 
-        const io = new WebSocketServer(this.server);
+        const io = new WebSocketServer(this.server, {
+            cors: {
+                origin: '*',
+            },
+        });
         new Socket_io(io)
         // socket_io.configureSocketEvents()
     }
