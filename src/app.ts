@@ -30,7 +30,8 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSetUp from "./docs/swagger";
 
 // archivo del sockets
-import { Socket_io } from "./sockets/socket";
+import { Socket_io_Comment } from "./sockets/socketComment";
+import { Socket_io_Likes } from "./sockets/socketLikes";
 
 // class de la configuracion del servidor
 class Server {
@@ -97,7 +98,8 @@ class Server {
                 origin: '*',
             },
         });
-        new Socket_io(io)
+        new Socket_io_Comment(io)
+        new Socket_io_Likes(io)
         // socket_io.configureSocketEvents()
     }
 }

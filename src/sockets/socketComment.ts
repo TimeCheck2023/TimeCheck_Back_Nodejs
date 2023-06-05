@@ -8,6 +8,10 @@ interface CommentPos {
     comentario: string;
     nro_documento_usuario: number;
 }
+interface CommentDelete {
+    id_evento4: number;
+    commentId: number;
+}
 
 interface CommentGet extends CommentPos {
     id_comentario: number;
@@ -16,9 +20,9 @@ interface CommentGet extends CommentPos {
 }
 
 
-export class Socket_io {
+export class Socket_io_Comment {
     io: Server;
-    instance: Socket_io;
+    instance: Socket_io_Comment;
 
     constructor(io: Server) {
         this.io = io;
@@ -26,15 +30,19 @@ export class Socket_io {
         this.io.on('connection', (socket: Socket) => {
             console.log(`Socket connected: ${socket.id}`);
 
+            socket.on('typing', () => {
+                socket.emit('typing', true);
+            })
+
             socket.on('getComments', (id_evento4: number) => {
                 this.getComments(socket, id_evento4)
             })
             socket.on('addComment', (comment: CommentPos) => {
                 this.addComment(socket, comment)
             })
-            // socket.on('deleteComment', (commentId: number) =>{
-            //     this.getComments(socket)
-            // })
+            socket.on('deleteComment', (commentId: CommentDelete) => {
+                this.deleteComment(socket, commentId)
+            })
         })
     }
 
@@ -45,7 +53,7 @@ export class Socket_io {
             const result = await request.execute(querys.getComments)
             this.io.emit('resultComments', result.recordset)
         } catch (error) {
-            console.log(error);
+            socket.emit('error', error);
         }
     }
 
@@ -58,11 +66,24 @@ export class Socket_io {
             await request.execute(querys.addComments);
             this.instance.getComments(socket, id_evento4);
         } catch (error) {
-            console.log(error);
+            socket.emit('error', error);
         }
     }
 
-    deleteComment() {
+    async deleteComment(socket: Socket, { commentId, id_evento4 }: CommentDelete) {
+        try {
+            if (commentId === undefined || id_evento4 === undefined) {
+                socket.emit('error', 'client debes mandarme los id para hacer lo que quieres');
+                return;
+            }
+            const request = pool.request()
+                .input('ComentarioID', sql.Int, commentId)
+            await request.execute(querys.DeleteComents)
+            this.instance.getComments(socket, id_evento4);
+            socket.emit('delete')
+        } catch (error) {
+            socket.emit('error', error);
+        }
     }
 
     // configureSocketEvents() {

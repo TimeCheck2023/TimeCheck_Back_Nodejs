@@ -1,7 +1,7 @@
 // estan los querys de los procedimientos alamacenados a usar
 const querys = {
 
-  
+
   getUsers: "sp_ObtenerUsuarios",
   getUserId: "sp_ObtenerUsuario_id",
   getUserSubOrgMiembro: "sp_ObtUsuariosMiembrosSubOrg",
@@ -25,7 +25,13 @@ const querys = {
 
 
   getComments: "sp_ObtenerComentarios",
-  addComments: "sp_InsertComment"
+  addComments: "sp_InsertComment",
+  DeleteComents: "sp_DeleteComentario",
+
+
+  getLikes: "sp_ObtenerLikes",
+  addLikes: "sp_InsertLike",
+  deleteLikes: "sp_deleteLikes",
 };
 
 export default querys;
