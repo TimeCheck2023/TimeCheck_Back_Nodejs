@@ -15,8 +15,12 @@ interface LikesDelete {
 }
 
 export class Socket_io_Likes {
+  
   io: Server;
   instance: Socket_io_Likes;
+  
+  
+  
   constructor(io: Server) {
     this.io = io;
     this.instance = this;

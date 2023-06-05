@@ -31,7 +31,7 @@ export class Socket_io_Comment {
             console.log(`Socket connected: ${socket.id}`);
 
             socket.on('typing', () => {
-                socket.emit('typing', true);
+                this.io.emit('typing', true);
             })
 
             socket.on('getComments', (id_evento4: number) => {
