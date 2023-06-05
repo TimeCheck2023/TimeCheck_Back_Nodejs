@@ -26,3 +26,6 @@ router.post("/enviar-notificacion", async(req: Request, res: Response) => {
     res.status(500).send("Error al enviar la notificación");
   }
 });
+
+
+export default router

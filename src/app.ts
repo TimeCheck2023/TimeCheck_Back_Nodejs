@@ -12,6 +12,7 @@ import usersRouter from "./routes/UserRouter";
 import OrgRouter from "./routes/OrgRouter";
 import AuthRouter from "./routes/AuthRouter";
 import SubOrgRouter from "./routes/SubOrgRouter";
+import NotificationRouter from "./Notifications/Notifications";
 
 //registro de petciones del sistema
 import morgan from "morgan";
@@ -83,6 +84,7 @@ class Server {
         this.app.use('/Auth', AuthRouter) //ruta de Auth
         this.app.use('/Org', OrgRouter) //ruta de organizacion
         this.app.use('/SubOrg', SubOrgRouter) //ruta de subOrganizacion
+        this.app.use('/Notification', NotificationRouter) //ruta de subOrganizacion
     }
 
 
