@@ -29,8 +29,12 @@ export class Socket_io_Comment {
     this.io.on("connection", (socket: Socket) => {
       console.log(`Socket connected: ${socket.id}`);
 
-      socket.on("typing", () => {
-        socket.broadcast.emit("typing", true);
+      socket.on("activo", () => {
+        socket.broadcast.emit("activo", true);
+      });
+      
+      socket.on("desactivo", () => {
+        socket.broadcast.emit("desactivo", false);
       });
 
       socket.on("getComments", (id_evento4: number) => {
