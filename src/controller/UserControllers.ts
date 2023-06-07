@@ -61,7 +61,7 @@ class UsersController {
     const id = parseInt(req.params.id);
     await services.deleteUserId(id)
       .then((responde) => {
-        res.status(200).json({ message: responde })        
+        res.status(200).json({ message: responde })
       }).catch((error) => {
         res.status(404).json({ error: error.originalError.info.message })
       });

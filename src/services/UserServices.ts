@@ -107,10 +107,8 @@ class user_service implements Users_interface {
         .request()
         .input("nro_documento_usuario", sql.BigInt, nro_documento_usuario);
       const result = await request.execute(query.deleteUserId);
-      console.log(result.recordset[0].Mensaje);
       return result.recordset[0].Mensaje;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
