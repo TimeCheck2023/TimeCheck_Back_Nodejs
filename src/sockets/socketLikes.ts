@@ -15,12 +15,12 @@ interface LikesDelete {
 }
 
 export class Socket_io_Likes {
-  
+
   io: Server;
   instance: Socket_io_Likes;
-  
-  
-  
+
+
+
   constructor(io: Server) {
     this.io = io;
     this.instance = this;
@@ -55,7 +55,7 @@ export class Socket_io_Likes {
       socket.emit("error", error);
     }
   }
-  async getCountLikes(socket: Socket, id_evento5: number) {    
+  async getCountLikes(socket: Socket, id_evento5: number) {
     try {
       const request = pool
         .request()
@@ -99,7 +99,12 @@ export class Socket_io_Likes {
     { id_evento, nro_documento_usuario }: LikesDelete
   ) {
     try {
-      const request = pool.request().input("id_evento5", sql.Int, id_evento);
+      const request = pool.request()
+        .input(
+          "nro_documento_usuario3",
+          sql.VarChar(250),
+          nro_documento_usuario
+        );
       await request.execute(querys.deleteLikes);
       this.instance.getLikes(socket, nro_documento_usuario);
       this.instance.getCountLikes(socket, id_evento);
