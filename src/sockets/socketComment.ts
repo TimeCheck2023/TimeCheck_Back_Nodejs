@@ -32,13 +32,16 @@ export class Socket_io_Comment {
       socket.on("activo", () => {
         socket.broadcast.emit("activo", true);
       });
-      
+
       socket.on("desactivo", () => {
         socket.broadcast.emit("desactivo", false);
       });
 
       socket.on("getComments", (id_evento4: number) => {
         this.getComments(socket, id_evento4);
+      });
+      socket.on("getCountComments", (id_evento4: number) => {
+        this.getCountComments(socket, id_evento4);
       });
       socket.on("addComment", (comment: CommentPos) => {
         this.addComment(socket, comment);
@@ -54,6 +57,16 @@ export class Socket_io_Comment {
       const request = pool.request().input("id_evento4", sql.Int, id_evento4);
       const result = await request.execute(querys.getComments);
       this.io.emit("resultComments", result.recordset);
+    } catch (error) {
+      socket.emit("error", error);
+    }
+  }
+
+  async getCountComments(socket: Socket, id_evento4: number) {
+    try {
+      const request = pool.request().input("idEvento", sql.Int, id_evento4);
+      const result = await request.execute(querys.getCountComments);
+      this.io.emit("CountComment", result.recordset[0]['']);
     } catch (error) {
       socket.emit("error", error);
     }
@@ -75,6 +88,7 @@ export class Socket_io_Comment {
         );
       await request.execute(querys.addComments);
       this.instance.getComments(socket, id_evento4);
+      this.instance.getCountComments(socket, id_evento4);
     } catch (error) {
       socket.emit("error", error);
     }
@@ -95,6 +109,7 @@ export class Socket_io_Comment {
       const request = pool.request().input("ComentarioID", sql.Int, commentId);
       await request.execute(querys.DeleteComents);
       this.instance.getComments(socket, id_evento4);
+      this.instance.getCountComments(socket, id_evento4);
       socket.emit("delete");
     } catch (error) {
       socket.emit("error", error);

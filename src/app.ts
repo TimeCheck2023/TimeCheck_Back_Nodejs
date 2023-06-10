@@ -100,6 +100,7 @@ class Server {
                 origin: '*',
             },
         });
+        
         new Socket_io_Comment(io)
         new Socket_io_Likes(io)
         // socket_io.configureSocketEvents()

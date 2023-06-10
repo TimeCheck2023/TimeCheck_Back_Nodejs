@@ -28,6 +28,9 @@ export class Socket_io_Likes {
       socket.on("getLikes", (nro_documento_usuario: number) => {
         this.getLikes(socket, nro_documento_usuario);
       });
+      socket.on("getCountLikes", (id_evento5: number) => {
+        this.getCountLikes(socket, id_evento5);
+      });
       socket.on("createLikes", (likes: LikesPos) => {
         this.createLikes(socket, likes);
       });
@@ -52,6 +55,21 @@ export class Socket_io_Likes {
       socket.emit("error", error);
     }
   }
+  async getCountLikes(socket: Socket, id_evento5: number) {    
+    try {
+      const request = pool
+        .request()
+        .input(
+          "idEvento",
+          sql.Int,
+          id_evento5
+        );
+      const result = await request.execute(querys.getCountLikes);
+      this.io.emit("Countlikes", result.recordset[0]['']);
+    } catch (error) {
+      socket.emit("error", error);
+    }
+  }
 
   async createLikes(
     socket: Socket,
@@ -69,6 +87,7 @@ export class Socket_io_Likes {
         );
       await request.execute(querys.addLikes);
       this.instance.getLikes(socket, nro_documento_usuario);
+      this.instance.getCountLikes(socket, id_evento);
     } catch (error) {
       socket.emit("error", error);
     }
@@ -82,6 +101,7 @@ export class Socket_io_Likes {
       const request = pool.request().input("id_evento5", sql.Int, id_evento);
       await request.execute(querys.deleteLikes);
       this.instance.getLikes(socket, nro_documento_usuario);
+      this.instance.getCountLikes(socket, id_evento);
     } catch (error) {
       socket.emit("error", error);
     }

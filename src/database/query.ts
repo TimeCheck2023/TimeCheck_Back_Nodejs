@@ -25,11 +25,13 @@ const querys = {
 
 
   getComments: "sp_ObtenerComentarios",
+  getCountComments: "sp_GetCountComments",
   addComments: "sp_InsertComment",
   DeleteComents: "sp_DeleteComentario",
 
 
   getLikes: "sp_ObtenerLikes",
+  getCountLikes: "sp_GetCountLikes",
   addLikes: "sp_InsertLike",
   deleteLikes: "sp_deleteLikes",
 };

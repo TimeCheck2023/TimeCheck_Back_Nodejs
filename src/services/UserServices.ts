@@ -65,8 +65,8 @@ class user_service implements Users_interface {
         .input("nombre_completo_usuario", sql.VarChar(255), fullName)
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), newPassword)
-        .input("codigo", sql.Int, codigoAleatorio);    
-        await request.execute(query.CreateUsersRegister);
+        .input("codigo", sql.Int, codigoAleatorio);
+      await request.execute(query.CreateUsersRegister);
       const template = getTemplate(fullName, codigoAleatorio, device);
       await sendEmail(emailAddress, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);
       return "Gracias por registrarse!!!";
@@ -102,10 +102,13 @@ class user_service implements Users_interface {
   }
 
   async deleteUserId(nro_documento_usuario: number): Promise<string | unknown> {
+    console.log(nro_documento_usuario);
+
+
     try {
       const request = pool
         .request()
-        .input("nro_documento_usuario", sql.BigInt, nro_documento_usuario);
+        .input("nro_documento_usuario", sql.Int, nro_documento_usuario);
       const result = await request.execute(query.deleteUserId);
       return result.recordset[0].Mensaje;
     } catch (error) {
