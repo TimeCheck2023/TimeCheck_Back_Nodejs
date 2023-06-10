@@ -75,6 +75,7 @@ export class Socket_io_Likes {
     socket: Socket,
     { id_evento, likes, nro_documento_usuario }: LikesPos
   ) {
+    console.log(nro_documento_usuario);
     try {
       const request = pool
         .request()
