@@ -96,7 +96,9 @@ class user_service implements Users_interface {
         .input("tipo_poblacion", typeofpopulation)
         .input("correo_usuario", emailAddress)
         .input("nro_documento_usuario", documentNumber);
-      await request.execute(query.UpdateUser);
+      const result = await request.execute(query.UpdateUser);
+      console.log(result);
+      
       return "Actualizacion correctamente";
     } catch (error) {
       throw error;

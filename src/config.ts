@@ -1,6 +1,7 @@
 //importo la configuracion del module que permite utilizar las variables de entorno
 import 'dotenv/config'
 
+
 //creo un objeto que tendra todas las variables de entorno del sistema
 export default {
     SQL_DATABASE : process.env.DATABASE,
