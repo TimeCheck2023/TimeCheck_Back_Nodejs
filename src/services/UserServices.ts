@@ -91,7 +91,7 @@ class user_service implements Users_interface {
       address,
       typeofpopulation,
       image_url,
-      device
+      device,
     }: NotPasswordIdentify,
     documentNumber: number
   ): Promise<string | unknown> {
@@ -107,17 +107,18 @@ class user_service implements Users_interface {
         .input("image_url", image_url);
       const results = await request.execute(query.UpdateUser);
       if (results.recordset[0].mensaje === "Todo bien") {
-        console.log("enviando correo...");
-        // const template = getTemplate(fullName, results.recordset[0].codigo_verificacion, device);
-        // await sendEmail(
-        //   emailAddress,
-        //   "Verificación de correo electrónico para El aplicativo TimeCheck",
-        //   template as string
-        // );
+        const template = getTemplate(
+          fullName,
+          results.recordset[0].codigo_verificacion,
+          device
+        );
+        await sendEmail(
+          emailAddress,
+          "Verificación de correo electrónico para El aplicativo TimeCheck",
+          template as string
+        );
       }
       const mensaje = results;
-      console.log(results.recordset[0].mensaje);
-      
 
       return mensaje;
     } catch (error) {
