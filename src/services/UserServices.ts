@@ -106,7 +106,7 @@ class user_service implements Users_interface {
       const mensaje = results.recordset[0].mensaje;
       console.log(mensaje); // "Todo bien"
 
-      return "Actualizacion correctamente";
+      return mensaje;
     } catch (error) {
       console.log(error); // "Todo bien"
       throw error;
