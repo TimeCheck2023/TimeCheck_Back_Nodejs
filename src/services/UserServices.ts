@@ -103,7 +103,7 @@ class user_service implements Users_interface {
         .input("correo_usuario", emailAddress)
         .input("nro_documento_usuario", documentNumber);
       const results = await request.execute(query.UpdateUser);
-      const mensaje = results.recordset[0][0].mensaje;
+      const mensaje = results;
       console.log(mensaje); // "Todo bien"
 
       return "Actualizacion correctamente";
