@@ -90,6 +90,7 @@ class user_service implements Users_interface {
       documentType,
       address,
       typeofpopulation,
+      image_url
     }: NotPasswordIdentify,
     documentNumber: number
   ): Promise<string | unknown> {
@@ -101,7 +102,8 @@ class user_service implements Users_interface {
         .input("direccion_usuario", address)
         .input("tipo_poblacion", typeofpopulation)
         .input("correo_usuario", emailAddress)
-        .input("nro_documento_usuario", documentNumber);
+        .input("nro_documento_usuario", documentNumber)
+        .input("image_url", image_url);
       const results = await request.execute(query.UpdateUser);
       const mensaje = results.recordset[0].mensaje;
       console.log(mensaje); // "Todo bien"
