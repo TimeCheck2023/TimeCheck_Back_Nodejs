@@ -31,7 +31,7 @@ class Org_service implements Org_interface {
         }
     }
 
-    async createOrganization({ organization_name, address_organization, email_organization, organization_password, numero_telefono, device }: Org_dto): Promise<string | unknown> {
+    async createOrganization({ organization_name, address_organization, email_organization, organization_password, numero_telefono, device, image_url }: Org_dto): Promise<string | unknown> {
         const newPassword = await encryptPass(organization_password)
         const codigoAleatorio = generarCodigoAleatorio();
         try {
@@ -41,7 +41,8 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('contraseña_organizacion', sql.VarChar(250), newPassword)
                 .input('numero_telefono', sql.BigInt, numero_telefono)
-                .input("codigo", sql.Int, codigoAleatorio);
+                .input("codigo", sql.Int, codigoAleatorio)
+                .input("image_url", sql.NVarChar(sql.MAX), image_url);
             await request.execute(query.CreateOrganizacionRegister);
             const template = getTemplate(organization_name, codigoAleatorio, device);
             await sendEmail(email_organization, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);

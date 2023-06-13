@@ -5,6 +5,7 @@ export interface Org_dto {
     organization_password: string;
     numero_telefono: number;
     device: string;
+    image_url: string;
 }
 
 export type NotPassword_Org = Omit<Org_dto, 'organization_password'>

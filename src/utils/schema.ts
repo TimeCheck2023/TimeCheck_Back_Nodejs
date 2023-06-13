@@ -10,6 +10,7 @@ export const userSchemaR = Joi.object({
   emailAddress: Joi.string().email().required(),
   password: Joi.string().required(),
   device: Joi.string().required(),
+  image_url: Joi.string().required(),
 });
 
 export const userSchemaUpdate = Joi.object({
@@ -29,6 +30,7 @@ export const OrgSchemaR = Joi.object({
   organization_password: Joi.string(),
   numero_telefono: Joi.number().required(),
   device: Joi.string().required(),
+  image_url: Joi.string().required(),
 });
 
 export const SubOrgSchemaR = Joi.object({

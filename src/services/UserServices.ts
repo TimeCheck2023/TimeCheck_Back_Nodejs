@@ -53,7 +53,8 @@ class user_service implements Users_interface {
     documentNumber,
     documentType,
     password,
-    device
+    device,
+    image_url
   }: Users_dto): Promise<string | unknown> {
     try {
       const newPassword = await encryptPass(password);
@@ -65,7 +66,8 @@ class user_service implements Users_interface {
         .input("nombre_completo_usuario", sql.VarChar(255), fullName)
         .input("correo_usuario", sql.VarChar(255), emailAddress)
         .input("contraseña_usuario", sql.VarChar(2000), newPassword)
-        .input("codigo", sql.Int, codigoAleatorio);
+        .input("codigo", sql.Int, codigoAleatorio)
+        .input("image_url", sql.NVarChar(sql.MAX), image_url);
       await request.execute(query.CreateUsersRegister);
       const template = getTemplate(fullName, codigoAleatorio, device);
       await sendEmail(emailAddress, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);

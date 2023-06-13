@@ -8,6 +8,8 @@ export interface Users_dto extends Auth_dto {
     address?: string;
     typeofpopulation?: string;
     device: string;
+    image_url: string;
+
 }
 export interface Users_dto_sub_miembro extends Auth_dto {
     id_miembro: number;
