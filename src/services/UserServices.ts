@@ -35,7 +35,9 @@ class user_service implements Users_interface {
     }
   }
 
-  async getUserSubMiembroId(id_suborganizacion: number): Promise<Users_dto_sub_miembro[] | unknown> {
+  async getUserSubMiembroId(
+    id_suborganizacion: number
+  ): Promise<Users_dto_sub_miembro[] | unknown> {
     try {
       const request = pool
         .request()
@@ -54,7 +56,7 @@ class user_service implements Users_interface {
     documentType,
     password,
     device,
-    image_url
+    image_url,
   }: Users_dto): Promise<string | unknown> {
     try {
       const newPassword = await encryptPass(password);
@@ -70,7 +72,11 @@ class user_service implements Users_interface {
         .input("image_url", sql.NVarChar(sql.MAX), image_url);
       await request.execute(query.CreateUsersRegister);
       const template = getTemplate(fullName, codigoAleatorio, device);
-      await sendEmail(emailAddress, "Verificación de correo electrónico para El aplicativo TimeCheck", template as string);
+      await sendEmail(
+        emailAddress,
+        "Verificación de correo electrónico para El aplicativo TimeCheck",
+        template as string
+      );
       return "Gracias por registrarse!!!";
     } catch (error) {
       throw error;
@@ -96,9 +102,10 @@ class user_service implements Users_interface {
         .input("tipo_poblacion", typeofpopulation)
         .input("correo_usuario", emailAddress)
         .input("nro_documento_usuario", documentNumber);
-      const result = await request.execute(query.UpdateUser);
-      console.log(result);
-      
+      const results = await request.execute(query.UpdateUser);
+      const mensaje = results.recordset[0][0].mensaje;
+      console.log(mensaje); // "Todo bien"
+
       return "Actualizacion correctamente";
     } catch (error) {
       throw error;
@@ -107,7 +114,6 @@ class user_service implements Users_interface {
 
   async deleteUserId(nro_documento_usuario: number): Promise<string | unknown> {
     console.log(nro_documento_usuario);
-
 
     try {
       const request = pool
