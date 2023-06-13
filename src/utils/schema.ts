@@ -20,6 +20,7 @@ export const userSchemaUpdate = Joi.object({
   address: Joi.string().allow(null, ""),
   typeofpopulation: Joi.string().allow(null, ""),
   emailAddress: Joi.string().email().required(),
+  image_url: Joi.string().allow(null, ""),
 });
 
 export const OrgSchemaR = Joi.object({
