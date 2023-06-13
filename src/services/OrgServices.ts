@@ -60,7 +60,8 @@ class Org_service implements Org_interface {
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('numero_telefono', sql.BigInt, numero_telefono)
                 .input('id_organizacion', sql.Int, id_organizacion);
-            await request.execute(query.UpdateOrgId);
+            const result =  await request.execute(query.UpdateOrgId);
+            console.log(result);
             return 'Actualizacion correcta'
         } catch (error) {
             throw error

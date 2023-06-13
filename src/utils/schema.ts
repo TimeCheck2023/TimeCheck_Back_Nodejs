@@ -24,6 +24,17 @@ export const userSchemaUpdate = Joi.object({
   image_url: Joi.string().allow(null, ""),
 });
 
+export const OrgSchemaUpdate = Joi.object({
+  id: Joi.number().required(),
+  organization_name: Joi.string().required(),
+  address_organization: Joi.string().required(),
+  email_organization: Joi.string().email().required(),
+  organization_password: Joi.string(),
+  numero_telefono: Joi.number().required(),
+  device: Joi.string().required(),
+  image_url: Joi.string().required(),
+});
+
 export const OrgSchemaR = Joi.object({
   id: Joi.number(),
   organization_name: Joi.string().required(),
