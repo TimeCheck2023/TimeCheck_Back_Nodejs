@@ -108,6 +108,7 @@ class user_service implements Users_interface {
 
       return "Actualizacion correctamente";
     } catch (error) {
+      console.log(error); // "Todo bien"
       throw error;
     }
   }
