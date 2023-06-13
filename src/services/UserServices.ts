@@ -105,8 +105,10 @@ class user_service implements Users_interface {
         .input("nro_documento_usuario", documentNumber)
         .input("image_url", image_url);
       const results = await request.execute(query.UpdateUser);
-      const mensaje = results.recordset[0].mensaje;
-      console.log(mensaje); // "Todo bien"
+      const mensaje = results.recordset;
+
+      console.log(mensaje);
+      
 
       return mensaje;
     } catch (error) {
