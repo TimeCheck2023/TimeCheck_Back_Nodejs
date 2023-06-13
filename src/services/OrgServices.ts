@@ -52,14 +52,15 @@ class Org_service implements Org_interface {
         }
     }
 
-    async updateOrganization({ organization_name, address_organization, email_organization, numero_telefono }: NotPassword_Org, id_organizacion: number): Promise<string | unknown> {
+    async updateOrganization({ organization_name, address_organization, email_organization, numero_telefono, image_url }: NotPassword_Org, id_organizacion: number): Promise<string | unknown> {
         try {
             const request = pool.request()
                 .input('nombre_organizacion', sql.VarChar(250), organization_name)
                 .input('direccion_organizacion', sql.VarChar(250), address_organization)
                 .input('correo_organizacion', sql.VarChar(250), email_organization)
                 .input('numero_telefono', sql.BigInt, numero_telefono)
-                .input('id_organizacion', sql.Int, id_organizacion);
+                .input('id_organizacion', sql.Int, id_organizacion)
+                .input('image_url', image_url);
             const result =  await request.execute(query.UpdateOrgId);
             console.log(result);
             return 'Actualizacion correcta'
