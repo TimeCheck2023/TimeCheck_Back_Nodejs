@@ -106,7 +106,7 @@ class user_service implements Users_interface {
         .input("nro_documento_usuario", documentNumber)
         .input("image_url", image_url);
       const results = await request.execute(query.UpdateUser);
-      if (results.recordset[0].mensaje === "Todo bien") {
+      if (results.recordset[0].mensaje === "cambiado") {
         const template = getTemplate(
           fullName,
           results.recordset[0].codigo_verificacion,
