@@ -33,6 +33,7 @@ import swaggerSetUp from "./docs/swagger";
 // archivo del sockets
 import { Socket_io_Comment } from "./sockets/socketComment";
 import { Socket_io_Likes } from "./sockets/socketLikes";
+import { Socket_io_Asistencia } from "./sockets/socketAsistencia";
 
 // class de la configuracion del servidor
 class Server {
@@ -103,6 +104,7 @@ class Server {
         
         new Socket_io_Comment(io)
         new Socket_io_Likes(io)
+        new Socket_io_Asistencia(io)
         // socket_io.configureSocketEvents()
     }
 }

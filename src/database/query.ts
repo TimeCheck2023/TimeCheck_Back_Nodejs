@@ -34,6 +34,11 @@ const querys = {
   getCountLikes: "sp_GetCountLikes",
   addLikes: "sp_InsertLike",
   deleteLikes: "sp_deleteLikes",
+
+
+  getAsistencia: "ObtenerAsistencias",
+  getCountEvent: "ObtenerCantidadEventos",
+  getCountSubOrg: "ObtenerCantidadSuborganizaciones",
 };
 
 export default querys;
