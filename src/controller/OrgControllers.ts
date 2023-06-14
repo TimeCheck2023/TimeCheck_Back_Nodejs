@@ -45,10 +45,10 @@ class OrgController {
     services
       .updateOrganization(data, id)
       .then((responde) => {
-        res.status(200).json({ message: responde });
+        res.status(200).json({ data: responde,  message: "Actualizacion correctamente" });
       })
       .catch((error) => {
-        res.status(400).json({ error: error.originalError.info.message });
+        res.status(400).json({ error: error.originalError.info });
       });
   }
 

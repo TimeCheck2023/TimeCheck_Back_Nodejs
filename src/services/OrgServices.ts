@@ -52,7 +52,7 @@ class Org_service implements Org_interface {
         }
     }
 
-    async updateOrganization({ organization_name, address_organization, email_organization, numero_telefono, image_url }: NotPassword_Org, id_organizacion: number): Promise<string | unknown> {
+    async updateOrganization({ organization_name, address_organization, email_organization, numero_telefono, image_url, device }: NotPassword_Org, id_organizacion: number): Promise<string | unknown> {
         try {
             const request = pool.request()
                 .input('nombre_organizacion', sql.VarChar(250), organization_name)
@@ -61,9 +61,21 @@ class Org_service implements Org_interface {
                 .input('numero_telefono', sql.BigInt, numero_telefono)
                 .input('id_organizacion', sql.Int, id_organizacion)
                 .input('image_url', image_url);
-            const result =  await request.execute(query.UpdateOrgId);
-            console.log(result);
-            return 'Actualizacion correcta'
+            const results = await request.execute(query.UpdateOrgId);
+            if (results.recordset[0].mensaje === "cambiado") {
+                const template = getTemplate(
+                    organization_name,
+                    results.recordset[0].codigo_verificacion,
+                    device
+                );
+                await sendEmail(
+                    email_organization,
+                    "Verificación de correo electrónico para El aplicativo TimeCheck",
+                    template as string
+                );
+            } 
+
+            return results;
         } catch (error) {
             throw error
         }
