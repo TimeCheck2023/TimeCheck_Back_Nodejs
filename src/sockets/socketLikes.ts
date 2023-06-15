@@ -69,6 +69,8 @@ export class Socket_io_Likes {
       const recordsets = result.recordsets as any;
       const countLikes = recordsets[0][0][""] as number; // Obtén el resultado del primer SELECT
       const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
+
+
       console.log(likesDetails);
       
       const combinedResult: CombinedResult = {
@@ -82,7 +84,7 @@ export class Socket_io_Likes {
       // Envía el resultado combinado al frontend
       console.log(combinedResult); // Solo para mostrar el resultado en la consola
 
-      this.io.emit("Countlikes", result.recordsets);
+      this.io.emit("Countlikes", combinedResult);
     } catch (error) {
       socket.emit("error", error);
     }
