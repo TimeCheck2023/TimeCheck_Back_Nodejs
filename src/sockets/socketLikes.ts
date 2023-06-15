@@ -65,7 +65,8 @@ export class Socket_io_Likes {
           id_evento5
         );
       const result = await request.execute(querys.getCountLikes);
-      console.log(result);
+      console.log(result.recordset[0]['']);
+      console.log(result.recordsets[1]);
       
       this.io.emit("Countlikes", result.recordset);
     } catch (error) {
