@@ -71,7 +71,7 @@ export class Socket_io_Likes {
       // const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
       const likesDetails = recordsets; // Obtén los resultados del segundo SELECT
 
-      console.log(result);
+      console.log(recordsets[0][0][0]);
 
       // const combinedResult: CombinedResult = {
       //   countLikes,
