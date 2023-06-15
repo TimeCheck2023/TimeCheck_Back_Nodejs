@@ -49,15 +49,11 @@ export class Socket_io_Asistencia {
         }
     }
     async getCountEvent(socket: Socket, id_organizacion: number) {
-        console.log(id_organizacion);
-
         try {
             const request = pool
                 .request()
-                .input(
-                    "idOrganizacion",
-                    sql.Int,
-                    id_organizacion
+                .input("idOrganizacion",sql.Int,
+id_organizacion
                 );
             const result = await request.execute(querys.getCountEvent);
             const recordset = result.recordset[0];

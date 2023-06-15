@@ -14,6 +14,16 @@ interface LikesDelete {
   id_evento: number;
 }
 
+interface LikeDetails {
+  idEvento: number;
+  nroDocumentoUsuario: string;
+}
+
+interface CombinedResult {
+  countLikes: number;
+  likesDetails: LikeDetails[];
+}
+
 export class Socket_io_Likes {
   io: Server;
   instance: Socket_io_Likes;
@@ -56,7 +66,19 @@ export class Socket_io_Likes {
     try {
       const request = pool.request().input("idEvento", sql.Int, id_evento5);
       const result = await request.execute(querys.getCountLikes);
-      console.log(result);
+      const recordsets = result.recordsets as any;
+      const countLikes = recordsets[0][0][""] as number; // Obtén el resultado del primer SELECT
+      const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
+      const combinedResult: CombinedResult = {
+        countLikes,
+        likesDetails: likesDetails.map((row) => ({
+          idEvento: row.idEvento,
+          nroDocumentoUsuario: row.nroDocumentoUsuario,
+        })),
+      };
+
+      // Envía el resultado combinado al frontend
+      console.log(combinedResult); // Solo para mostrar el resultado en la consola
 
       this.io.emit("Countlikes", result.recordsets);
     } catch (error) {
