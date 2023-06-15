@@ -13,13 +13,14 @@ interface LikesDelete {
   nro_documento_usuario: number;
   id_evento: number;
 }
+interface MyInterface {
+  firstArray: { idEvento: number; nroDocumentoUsuario: string; }[][];
+  secondArray: number[];
+}
 
 export class Socket_io_Likes {
-
   io: Server;
   instance: Socket_io_Likes;
-
-
 
   constructor(io: Server) {
     this.io = io;
@@ -57,16 +58,10 @@ export class Socket_io_Likes {
   }
   async getCountLikes(socket: Socket, id_evento5: number) {
     try {
-      const request = pool
-        .request()
-        .input(
-          "idEvento",
-          sql.Int,
-          id_evento5
-        );
+      const request = pool.request().input("idEvento", sql.Int, id_evento5);
       const result = await request.execute(querys.getCountLikes);
-      console.log(result);
-      
+      console.log(result.recordsets as MyInterface);
+
       this.io.emit("Countlikes", result.recordset);
     } catch (error) {
       socket.emit("error", error);
@@ -101,7 +96,8 @@ export class Socket_io_Likes {
     { id_evento, nro_documento_usuario }: LikesDelete
   ) {
     try {
-      const request = pool.request()
+      const request = pool
+        .request()
         .input(
           "nro_documento_usuario3",
           sql.VarChar(250),
