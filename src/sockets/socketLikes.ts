@@ -56,7 +56,7 @@ export class Socket_io_Likes {
     try {
       const request = pool.request().input("idEvento", sql.Int, id_evento5);
       const result = await request.execute(querys.getCountLikes);
-      console.log(result.recordsets);
+      console.log(result);
 
       this.io.emit("Countlikes", result.recordsets);
     } catch (error) {
