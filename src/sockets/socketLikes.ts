@@ -68,23 +68,24 @@ export class Socket_io_Likes {
       const result = await request.execute(querys.getCountLikes);
       const recordsets = result.recordsets as any;
       const countLikes = recordsets[0][0][""] as number; // Obtén el resultado del primer SELECT
-      const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
+      // const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
+      const likesDetails = recordsets; // Obtén los resultados del segundo SELECT
 
 
       console.log(likesDetails);
       
-      const combinedResult: CombinedResult = {
-        countLikes,
-        likesDetails: likesDetails.map((row) => ({
-          idEvento: row.idEvento,
-          nroDocumentoUsuario: row.nroDocumentoUsuario,
-        })),
-      };
+      // const combinedResult: CombinedResult = {
+      //   countLikes,
+      //   likesDetails: likesDetails.map((row) => ({
+      //     idEvento: row.idEvento,
+      //     nroDocumentoUsuario: row.nroDocumentoUsuario,
+      //   })),
+      // };
 
       // Envía el resultado combinado al frontend
-      console.log(combinedResult); // Solo para mostrar el resultado en la consola
+      // console.log(combinedResult); // Solo para mostrar el resultado en la consola
 
-      this.io.emit("Countlikes", combinedResult);
+      // this.io.emit("Countlikes", combinedResult);
     } catch (error) {
       socket.emit("error", error);
     }
