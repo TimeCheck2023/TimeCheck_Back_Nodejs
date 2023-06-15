@@ -13,10 +13,9 @@ interface LikesDelete {
   nro_documento_usuario: number;
   id_evento: number;
 }
-
 interface LikeDetails {
-  idEvento: number;
-  nroDocumentoUsuario: string;
+  id_evento5: number;
+  nroDocumentoUsuario3: string;
 }
 
 interface CombinedResult {
@@ -62,29 +61,24 @@ export class Socket_io_Likes {
       socket.emit("error", error);
     }
   }
+
   async getCountLikes(socket: Socket, id_evento5: number) {
     try {
       const request = pool.request().input("idEvento", sql.Int, id_evento5);
       const result = await request.execute(querys.getCountLikes);
       const recordsets = result.recordsets as any;
-      const countLikes = recordsets[0][0][""] as number; // Obtén el resultado del primer SELECT
-      // const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
-      const likesDetails = recordsets; // Obtén los resultados del segundo SELECT
+      const countLikes = recordsets[0][0].LikesCount as number; // Obtén el resultado del primer SELECT
+      const likesDetails = recordsets[1] as LikeDetails[]; // Obtén los resultados del segundo SELECT
 
-      console.log(recordsets[0]);
+      const combinedResult: CombinedResult = {
+        countLikes,
+        likesDetails: likesDetails.map((row) => ({
+          id_evento5: row.id_evento5,
+          nroDocumentoUsuario3: row.nroDocumentoUsuario3,
+        })),
+      };
 
-      // const combinedResult: CombinedResult = {
-      //   countLikes,
-      //   likesDetails: likesDetails.map((row) => ({
-      //     idEvento: row.idEvento,
-      //     nroDocumentoUsuario: row.nroDocumentoUsuario,
-      //   })),
-      // };
-
-      // Envía el resultado combinado al frontend
-      // console.log(combinedResult); // Solo para mostrar el resultado en la consola
-
-      // this.io.emit("Countlikes", combinedResult);
+      this.io.emit("Countlikes", combinedResult);
     } catch (error) {
       socket.emit("error", error);
     }
