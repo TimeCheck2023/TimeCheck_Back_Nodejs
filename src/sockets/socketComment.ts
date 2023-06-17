@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io";
+import { Socket, Server as WebSocketServer } from "socket.io";
 import pool from "../database/Connection";
 import querys from "../database/query";
 import sql from "mssql";
@@ -20,99 +20,80 @@ interface CommentGet extends CommentPos {
 }
 
 export class Socket_io_Comment {
-  io: Server;
-  instance: Socket_io_Comment;
+  socket: Socket;
+  io: WebSocketServer;
 
-  constructor(io: Server) {
+  constructor(socket: Socket, io: WebSocketServer) {
+    this.socket = socket;
     this.io = io;
-    this.instance = this;
-    this.io.on("connection", (socket: Socket) => {
-      console.log(`Socket connected: ${socket.id}`);
+    this.registerListeners();
+    // this.io.on("connection", (socket: Socket) => {
+    this.socket.on("activo", () => {
+      socket.broadcast.emit("activo", true);
+    });
 
-      socket.on("activo", () => {
-        socket.broadcast.emit("activo", true);
-      });
-
-      socket.on("desactivo", () => {
-        socket.broadcast.emit("desactivo", false);
-      });
-
-      socket.on("getComments", (id_evento4: number) => {
-        this.getComments(socket, id_evento4);
-      });
-      socket.on("getCountComments", (id_evento4: number) => {
-        this.getCountComments(socket, id_evento4);
-      });
-      socket.on("addComment", (comment: CommentPos) => {
-        this.addComment(socket, comment);
-      });
-      socket.on("deleteComment", (commentId: CommentDelete) => {
-        this.deleteComment(socket, commentId);
-      });
+    this.socket.on("desactivo", () => {
+      socket.broadcast.emit("desactivo", false);
     });
   }
 
-  async getComments(socket: Socket, id_evento4: number) {
+  registerListeners(): void {
+    this.socket.on("getComments", this.getComments.bind(this));
+    this.socket.on("getCountComments", this.getCountComments.bind(this));
+    this.socket.on("addComment", this.addComment.bind(this));
+    this.socket.on("deleteComment", this.deleteComment.bind(this));
+  }
+
+  async getComments(id_evento4: number) {
+    console.log(id_evento4);
     try {
       const request = pool.request().input("id_evento4", sql.Int, id_evento4);
       const result = await request.execute(querys.getComments);
       this.io.emit("resultComments", result.recordset);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
-  async getCountComments(socket: Socket, id_evento4: number) {
+  async getCountComments(id_evento4: number) {
     try {
       const request = pool.request().input("idEvento", sql.Int, id_evento4);
       const result = await request.execute(querys.getCountComments);
       this.io.emit("CountComment", result.recordset[0]['']);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
-  async addComment(
-    socket: Socket,
-    { id_evento4, comentario, nro_documento_usuario }: CommentPos
-  ) {
+  async addComment({ id_evento4, comentario, nro_documento_usuario }: CommentPos) {
     try {
       const request = pool
         .request()
         .input("id_evento4", sql.Int, id_evento4)
         .input("comentario", sql.NVarChar(sql.MAX), comentario)
-        .input(
-          "nro_documento_usuario",
-          sql.VarChar(250),
-          nro_documento_usuario
-        );
+        .input("nro_documento_usuario", sql.VarChar(250), nro_documento_usuario);
       await request.execute(querys.addComments);
-      this.instance.getComments(socket, id_evento4);
-      this.instance.getCountComments(socket, id_evento4);
+      this.getComments(id_evento4)
+      console.log("ya voy a recargar la data");
+      this.getCountComments(id_evento4);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
-  async deleteComment(
-    socket: Socket,
-    { commentId, id_evento4 }: CommentDelete
-  ) {
+  async deleteComment({ commentId, id_evento4 }: CommentDelete) {
     try {
       if (commentId === undefined || id_evento4 === undefined) {
-        socket.emit(
-          "error",
-          "client debes mandarme los id para hacer lo que quieres"
-        );
+        this.socket.emit("error", "client debes mandarme los id para hacer lo que quieres");
         return;
       }
       const request = pool.request().input("ComentarioID", sql.Int, commentId);
       await request.execute(querys.DeleteComents);
-      this.instance.getComments(socket, id_evento4);
-      this.instance.getCountComments(socket, id_evento4);
-      socket.emit("delete");
+      this.getComments(id_evento4);
+      this.getCountComments(id_evento4);
+      this.socket.emit("delete");
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 

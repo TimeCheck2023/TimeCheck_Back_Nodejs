@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import http from "http";
-import { Server as WebSocketServer } from "socket.io";
+import { Socket, Server as WebSocketServer } from "socket.io";
 
 //importo la conexion a la base de datos
 import './database/Connection'
@@ -35,12 +35,14 @@ import { Socket_io_Comment } from "./sockets/socketComment";
 import { Socket_io_Likes } from "./sockets/socketLikes";
 import { Socket_io_Asistencia } from "./sockets/socketAsistencia";
 
+
 // class de la configuracion del servidor
 class Server {
 
     // atributos
     app: Application;
     server: http.Server;
+    io: WebSocketServer;
     port: string | number;
 
     //constructor
@@ -51,6 +53,8 @@ class Server {
 
         // aca le pasamos la configuracion de express al servidor de http 
         this.server = http.createServer(this.app);
+
+        this.io = new WebSocketServer(this.server);
 
         // config de port
         this.port = config.PORT || 3000;
@@ -96,15 +100,13 @@ class Server {
             console.log(`server listening on port ${this.port}`);
         });
 
-        const io = new WebSocketServer(this.server, {
-            cors: {
-                origin: '*',
-            },
-        });
-        
-        new Socket_io_Comment(io)
-        new Socket_io_Likes(io)
-        new Socket_io_Asistencia(io)
+        this.io.on('connection', (socket: Socket) => {
+            console.log(`Socket connected: ${socket.id}`);
+            new Socket_io_Comment(socket, this.io)
+            new Socket_io_Likes(socket, this.io)
+            new Socket_io_Asistencia(socket, this.io)
+        })
+
         // socket_io.configureSocketEvents()
     }
 }

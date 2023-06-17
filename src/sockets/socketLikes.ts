@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io";
+import { Socket, Server as WebSocketServer } from "socket.io";
 import pool from "../database/Connection";
 import querys from "../database/query";
 import sql from "mssql";
@@ -24,45 +24,38 @@ interface CombinedResult {
 }
 
 export class Socket_io_Likes {
-  io: Server;
+  socket: Socket;
+  io: WebSocketServer;
   instance: Socket_io_Likes;
 
-  constructor(io: Server) {
+  constructor(socket: Socket, io: WebSocketServer) {
+    this.socket = socket;
     this.io = io;
     this.instance = this;
-    this.io.on("connection", (socket: Socket) => {
-      socket.on("getLikes", (nro_documento_usuario: number) => {
-        this.getLikes(socket, nro_documento_usuario);
-      });
-      socket.on("getCountLikes", (id_evento5: number) => {
-        this.getCountLikes(socket, id_evento5);
-      });
-      socket.on("createLikes", (likes: LikesPos) => {
-        this.createLikes(socket, likes);
-      });
-      socket.on("deleteLikes", (likes: LikesDelete) => {
-        this.deleteLikes(socket, likes);
-      });
-    });
+    this.registerListeners();
   }
 
-  async getLikes(socket: Socket, nro_documento_usuario: number) {
+  registerListeners(): void {
+    this.socket.on("getLikes", this.getLikes.bind(this));
+    this.socket.on("getCountLikes", this.getCountLikes.bind(this));
+    this.socket.on("createLikes", this.createLikes.bind(this));
+    this.socket.on("deleteLikes", this.deleteLikes.bind(this));
+  }
+
+  async getLikes(nro_documento_usuario: number) {
+    console.log(nro_documento_usuario);
     try {
-      const request = pool
-        .request()
-        .input(
-          "nro_documento_usuario3",
-          sql.VarChar(250),
-          nro_documento_usuario
-        );
+      const request = pool.request()
+        .input("nro_documento_usuario3", sql.VarChar(250), nro_documento_usuario);
       const result = await request.execute(querys.getLikes);
       this.io.emit("likes", result.recordset);
     } catch (error) {
-      socket.emit("error", error);
+      console.log(error);
+      this.socket.emit("error", error);
     }
   }
 
-  async getCountLikes(socket: Socket, id_evento5: number) {
+  async getCountLikes(id_evento5: number) {
     try {
       const request = pool.request().input("idEvento", sql.Int, id_evento5);
       const result = await request.execute(querys.getCountLikes);
@@ -80,50 +73,37 @@ export class Socket_io_Likes {
 
       this.io.emit("Countlikes", combinedResult);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
-  async createLikes(
-    socket: Socket,
-    { id_evento, likes, nro_documento_usuario }: LikesPos
-  ) {
+  async createLikes({ id_evento, likes, nro_documento_usuario }: LikesPos) {
+    console.log(nro_documento_usuario);
+    try {
+      const request = pool.request()
+        .input("id_evento5", sql.Int, id_evento)
+        .input("like", sql.Int, likes)
+        .input("nro_documento_usuario3", sql.VarChar(250), nro_documento_usuario);
+      await request.execute(querys.addLikes);
+      this.instance.getLikes(nro_documento_usuario);
+      this.instance.getCountLikes(id_evento);
+    } catch (error) {
+      this.socket.emit("error", error);
+    }
+  }
+
+  async deleteLikes({ id_evento, nro_documento_usuario }: LikesDelete) {
     console.log(nro_documento_usuario);
     try {
       const request = pool
         .request()
-        .input("id_evento5", sql.Int, id_evento)
-        .input("like", sql.Int, likes)
-        .input(
-          "nro_documento_usuario3",
-          sql.VarChar(250),
-          nro_documento_usuario
-        );
-      await request.execute(querys.addLikes);
-      this.instance.getLikes(socket, nro_documento_usuario);
-      this.instance.getCountLikes(socket, id_evento);
-    } catch (error) {
-      socket.emit("error", error);
-    }
-  }
-
-  async deleteLikes(
-    socket: Socket,
-    { id_evento, nro_documento_usuario }: LikesDelete
-  ) {
-    try {
-      const request = pool
-        .request()
-        .input(
-          "nro_documento_usuario3",
-          sql.VarChar(250),
-          nro_documento_usuario
-        );
+        .input("nro_documento_usuario3", sql.VarChar(250), nro_documento_usuario)
+        .input("id_evento", sql.Int, id_evento);
       await request.execute(querys.deleteLikes);
-      this.instance.getLikes(socket, nro_documento_usuario);
-      this.instance.getCountLikes(socket, id_evento);
+      this.instance.getLikes(nro_documento_usuario);
+      this.instance.getCountLikes(id_evento);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 }

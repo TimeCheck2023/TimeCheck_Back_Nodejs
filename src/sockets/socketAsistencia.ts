@@ -1,35 +1,42 @@
-import { Server, Socket } from "socket.io";
+import { Socket, Server as WebSocketServer } from "socket.io";
 import pool from "../database/Connection";
 import querys from "../database/query";
 import sql from "mssql";
 
 export class Socket_io_Asistencia {
-  io: Server;
+  socket: Socket;
+  io: WebSocketServer;
   instance: Socket_io_Asistencia;
 
-  constructor(io: Server) {
+  constructor(socket: Socket, io: WebSocketServer) {
+    this.socket = socket;
     this.io = io;
     this.instance = this;
-    this.io.on("connection", (socket: Socket) => {
-      socket.on("getAsistencia", (id_evento: number) => {
-        this.getAsistencia(socket, id_evento);
-      });
-      socket.on("postAsistencia", (id_evento: number) => {
-        this.getAsistencia(socket, id_evento);
-      });
-      socket.on("getCountEvent", (id_organizacion: number) => {
-        this.getCountEvent(socket, id_organizacion);
-      });
-      socket.on("getCountSubOrg", (id_organizacion: number) => {
-        this.getCountSubOrg(socket, id_organizacion);
-      });
-    });
+    this.registerListeners();
+    // socket.on("getAsistencia", (id_evento: number) => {
+    //   this.getAsistencia(socket, id_evento);
+    // });
+    // socket.on("postAsistencia", (id_evento: number) => {
+    //   this.getAsistencia(socket, id_evento);
+    // });
+    // socket.on("getCountEvent", (id_organizacion: number) => {
+    //   this.getCountEvent(socket, id_organizacion);
+    // });
+    // socket.on("getCountSubOrg", (id_organizacion: number) => {
+    //   this.getCountSubOrg(socket, id_organizacion);
+    // });
   }
 
-  
-  async getAsistencia(socket: Socket, id_evento: number) {
-    console.log(id_evento);
+  registerListeners(): void {
+    this.socket.on("getAsistencia", this.getAsistencia.bind(this));
+    this.socket.on("postAsistencia", this.getAsistencia.bind(this));
+    this.socket.on("getCountEvent", this.getCountEvent.bind(this));
+    this.socket.on("getCountSubOrg", this.getCountSubOrg.bind(this));
+  }
 
+
+  async getAsistencia(id_evento: number) {
+    console.log(id_evento);
     try {
       const request = pool.request().input("id_evento2", sql.Int, id_evento);
       const result = await request.execute(querys.getAsistencia);
@@ -37,12 +44,12 @@ export class Socket_io_Asistencia {
 
       this.io.emit("Asistencias", recordset);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
 
-  async getCountEvent(socket: Socket, id_organizacion: number) {
+  async getCountEvent(id_organizacion: number) {
     try {
       const request = pool
         .request()
@@ -53,12 +60,12 @@ export class Socket_io_Asistencia {
 
       this.io.emit("CountEvent", recordset);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 
 
-  async getCountSubOrg(socket: Socket, id_organizacion: number) {
+  async getCountSubOrg(id_organizacion: number) {
     console.log(id_organizacion);
 
     try {
@@ -71,7 +78,7 @@ export class Socket_io_Asistencia {
 
       this.io.emit("CountSubOrg", recordset);
     } catch (error) {
-      socket.emit("error", error);
+      this.socket.emit("error", error);
     }
   }
 }
