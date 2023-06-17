@@ -47,13 +47,18 @@ export class Socket_io_Comment {
   async getComments(id_evento4: number) {
     console.log(id_evento4);
     try {
+      // Salir de todas las salas actuales
+      Object.keys(this.socket.rooms).forEach((room) => {
+        this.socket.leave(room);
+      });
 
-      // Unirse a una sala basada en el eventoId
-      this.socket.join(id_evento4.toString());
+      // Unirse a una sala basada en una combinación de socket.id y eventoId
+      const sala = `${this.socket.id}_${id_evento4}`;
+      this.socket.join(sala);
 
       const request = pool.request().input("id_evento4", sql.Int, id_evento4);
       const result = await request.execute(querys.getComments);
-      this.io.to(id_evento4.toString()).emit("resultComments", result.recordset);
+      this.io.to(sala).emit("resultComments", result.recordset);
     } catch (error) {
       this.socket.emit("error", error);
     }
