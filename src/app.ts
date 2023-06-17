@@ -54,7 +54,13 @@ class Server {
         // aca le pasamos la configuracion de express al servidor de http 
         this.server = http.createServer(this.app);
 
-        this.io = new WebSocketServer(this.server);
+        this.io = new WebSocketServer(this.server, {
+            cors: {
+                origin: '*',
+                // methods: ['GET', 'POST'],
+                // allowedHeaders: ['Content-Type'],
+            },
+        });
 
         // config de port
         this.port = config.PORT || 3000;
