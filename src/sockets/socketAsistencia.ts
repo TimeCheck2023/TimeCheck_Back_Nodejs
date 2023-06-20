@@ -17,7 +17,6 @@ export class Socket_io_Asistencia {
 
   registerListeners(): void {
     this.socket.on("getAsistencia", this.getAsistencia.bind(this));
-    this.socket.on("postAsistencia", this.getAsistencia.bind(this));
     this.socket.on("getCountEvent", this.getCountEvent.bind(this));
     this.socket.on("getCountSubOrg", this.getCountSubOrg.bind(this));
   }
@@ -31,7 +30,7 @@ export class Socket_io_Asistencia {
 
       this.io.emit("Asistencias", recordset);
     } catch (error) {
-      this.socket.emit("error", error);
+      this.io.emit("error", error);
     }
   }
 
