@@ -21,19 +21,26 @@ export class Socket_io_Asistencia {
     this.socket.on("getCountSubOrg", this.getCountSubOrg.bind(this));
   }
 
-
   async getAsistencia(id_evento: number) {
     try {
+      // Salir de todas las salas actuales
+      Object.keys(this.socket.rooms).forEach((room) => {
+        this.socket.leave(room);
+      });
+
+      // Unirse a una sala basada en una combinación de socket.id y eventoId
+      // const sala = `${socket.id}_${eventoId}`;
+      this.socket.join(id_evento.toString());
+
       const request = pool.request().input("id_evento2", sql.Int, id_evento);
       const result = await request.execute(querys.getAsistencia);
       const recordset = result.recordset[0];
 
-      this.io.emit("Asistencias", recordset);
+      this.io.to(id_evento.toString()).emit("Asistencias", recordset);
     } catch (error) {
       this.io.emit("error", error);
     }
   }
-
 
   async getCountEvent(id_organizacion: number) {
     try {
@@ -49,7 +56,6 @@ export class Socket_io_Asistencia {
       this.socket.emit("error", error);
     }
   }
-
 
   async getCountSubOrg(id_organizacion: number) {
     console.log(id_organizacion);
