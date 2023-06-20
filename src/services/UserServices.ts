@@ -122,13 +122,11 @@ class user_service implements Users_interface {
 
       return mensaje;
     } catch (error) {
-      console.log(error); // "Todo bien"
       throw error;
     }
   }
 
   async deleteUserId(nro_documento_usuario: number): Promise<string | unknown> {
-    console.log(nro_documento_usuario);
 
     try {
       const request = pool

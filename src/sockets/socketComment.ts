@@ -45,7 +45,6 @@ export class Socket_io_Comment {
   }
 
   async getComments(id_evento4: number) {
-    console.log(id_evento4);
     try {
       // Salir de todas las salas actuales
       Object.keys(this.socket.rooms).forEach((room) => {
@@ -57,7 +56,9 @@ export class Socket_io_Comment {
       this.socket.join(id_evento4.toString());
 
       const request = pool.request().input("id_evento4", sql.Int, id_evento4);
+
       const result = await request.execute(querys.getComments);
+
       this.io.to(id_evento4.toString()).emit("resultComments", result.recordset);
     } catch (error) {
       this.socket.emit("error", error);
@@ -82,8 +83,8 @@ export class Socket_io_Comment {
         .input("comentario", sql.NVarChar(sql.MAX), comentario)
         .input("nro_documento_usuario", sql.VarChar(250), nro_documento_usuario);
       await request.execute(querys.addComments);
+
       this.getComments(id_evento4)
-      console.log("ya voy a recargar la data");
       this.getCountComments(id_evento4);
     } catch (error) {
       this.socket.emit("error", error);

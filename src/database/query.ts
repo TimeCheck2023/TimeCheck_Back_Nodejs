@@ -22,6 +22,8 @@ const querys = {
 
   VeryUsersLogin: "sp_autenticar_usuario",
   VerificarEmail: "sp_Verificacion_email",
+  RecuperacionEmail: "VerificarEmail",
+  cambioPassword: "sp_cambioPassword",
 
 
   getComments: "sp_ObtenerComentarios",

@@ -13,18 +13,6 @@ export class Socket_io_Asistencia {
     this.io = io;
     this.instance = this;
     this.registerListeners();
-    // socket.on("getAsistencia", (id_evento: number) => {
-    //   this.getAsistencia(socket, id_evento);
-    // });
-    // socket.on("postAsistencia", (id_evento: number) => {
-    //   this.getAsistencia(socket, id_evento);
-    // });
-    // socket.on("getCountEvent", (id_organizacion: number) => {
-    //   this.getCountEvent(socket, id_organizacion);
-    // });
-    // socket.on("getCountSubOrg", (id_organizacion: number) => {
-    //   this.getCountSubOrg(socket, id_organizacion);
-    // });
   }
 
   registerListeners(): void {
@@ -36,7 +24,6 @@ export class Socket_io_Asistencia {
 
 
   async getAsistencia(id_evento: number) {
-    console.log(id_evento);
     try {
       const request = pool.request().input("id_evento2", sql.Int, id_evento);
       const result = await request.execute(querys.getAsistencia);
