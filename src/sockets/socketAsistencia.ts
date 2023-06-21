@@ -23,17 +23,20 @@ export class Socket_io_Asistencia {
 
   async getAsistencia(id_evento: number) {
     try {
-
+      
       // Unirse a una sala basada en el eventoId
-      // this.socket.join(id_evento.toString());
+      this.socket.join(id_evento.toString());
 
       const request = pool.request().input("id_evento2", sql.Int, id_evento);
       const result = await request.execute(querys.getAsistencia);
       const recordset = result.recordset[0];
+
+      console.log(recordset);
+      
       
       this.io.to(id_evento.toString()).emit("Asistencias", recordset);
     } catch (error) {
-      this.io.emit("error", error);
+      this.io.to(id_evento.toString()).emit("error", error);
     }
   }
 
