@@ -12,6 +12,7 @@ export class Socket_io_Asistencia {
     this.socket = socket;
     this.io = io;
     this.instance = this;
+    // this.socket.on('')
     this.registerListeners();
   }
 
@@ -31,7 +32,7 @@ export class Socket_io_Asistencia {
       const result = await request.execute(querys.getAsistencia);
       const recordset = result.recordset[0];
 
-      console.log(recordset);
+      recordset.id_evento = id_evento
       
       
       this.io.to(id_evento.toString()).emit("Asistencias", recordset);
