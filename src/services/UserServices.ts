@@ -1,11 +1,6 @@
 import Users_interface from "../Interfaces/Users_interfaces";
 import query from "../database/query";
-import {
-  NotPasswordIdentify,
-  Users_Get_dto,
-  Users_dto,
-  Users_dto_sub_miembro,
-} from "../Dto/Users_dto";
+import { NotPasswordIdentify, Users_Get_dto, Users_dto, Users_dto_sub_miembro } from "../Dto/Users_dto";
 import sql from "mssql";
 import pool from "../database/Connection";
 import { encryptPass } from "../utils/bcrypt";

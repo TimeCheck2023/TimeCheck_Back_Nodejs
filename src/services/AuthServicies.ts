@@ -3,6 +3,9 @@ import { Auth_dto, Password_dto } from "../Dto/Auth_dto";
 import pool from "../database/Connection";
 import query from "../database/query";
 import { CreateToken, encryptPass, macthPass } from "../utils/bcrypt";
+import { sendEmail, getTemplateEmail } from "../utils/nodemailer";
+import generarCodigoAleatorio from "../utils/codigoRandom";
+
 
 class Auth_service {
     async authUser({ emailAddress, password }: Auth_dto): Promise<string | unknown> {
@@ -29,10 +32,12 @@ class Auth_service {
     }
     async verificacionEmails(Email: string): Promise<string | unknown> {
         try {
-
-            const request = pool.request()
-                .input("Email", sql.VarChar(100), Email)
+            const codigoAleatorio = generarCodigoAleatorio();
+            const request = pool.request().input("Email", sql.VarChar(100), Email)
             const responde = await request.execute(query.RecuperacionEmail)
+            const template: string = getTemplateEmail(Email, codigoAleatorio)
+            sendEmail(Email, 'Solicitud de código de recuperación de contraseña', template)
+            responde.recordset[0].codigo = codigoAleatorio
             return responde.recordset[0];
         } catch (error) {
             throw error

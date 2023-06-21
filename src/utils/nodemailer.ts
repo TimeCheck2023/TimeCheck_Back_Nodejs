@@ -36,8 +36,8 @@ const sendEmail = async (email: string, subject: string, html: string) => {
   }
 };
 
-const getTemplate = (name: string, randomNumber: string, device: string) => {
-    return `
+const getTemplate = (name: string, randomNumber: string, device?: string) => {
+  return `
     <h1 style="color:#000;font-size:20px;">¡Estimado ${name}!</h1>
     <p style="color:#000;font-size:14px;">Gracias por registrarte en El aplicativo TimeCheck! Para completar el proceso de registro y asegurarnos de que tu dirección de correo electrónico sea válida, necesitamos que verifiques tu cuenta.</p>
     <p style="color:#000;font-size:14px;">verificar el gmail desde la movil, ingresa este codigo: <span style="display:color:#000;font-size:16px;padding:10px 20px;text-decoration:none;"">${randomNumber}</span></p>
@@ -51,4 +51,16 @@ const getTemplate = (name: string, randomNumber: string, device: string) => {
   `;
 };
 
-export { sendEmail, getTemplate };
+const getTemplateEmail = (email: string, randomNumber: string) => {
+  return `
+    <h1 style="color:#000;font-size:20px;">¡Estimado ${email}!</h1>
+    <p style="color:#000;font-size:14px;">Para proceder con el restablecimiento de su contraseña, le proporcionamos un código de recuperación único. Este código es una medida de seguridad adicional para garantizar la protección de su cuenta. A continuación, encontrará el código de recuperación:</p>
+    <p style="color:#000;font-size:14px;">Código de recuperación: <span style="display:color:#000;font-size:16px;padding:10px 20px;text-decoration:none;"">${randomNumber}</span></p>
+    <p style="color:#000;font-size:14px;">Agradecemos su atención y comprensión en este asunto. Si tiene alguna pregunta o necesita ayuda adicional,, no dudes en ponerte en contacto con nuestro equipo de soporte a través este enlace: </p>
+    <a href="https://timecheck.netlify.app/ContactUs" target="_blank" style="display:inline-block;background-color:#007bff;border-radius:5px;color:#ffffff;font-size:16px;padding:10px 20px;text-decoration:none;">Información de contacto</a>
+    <p style="color:#000;font-size:14px;">Atentamente</p>
+    <p style="color:#000;font-size:14px;">El equipo de TimeCheck</p>
+  `;
+};
+
+export { sendEmail, getTemplate, getTemplateEmail };
