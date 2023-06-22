@@ -40,7 +40,9 @@ class OrgController {
   }
 
   updateOrgId(req: Request, res: Response) {
-    const id = parseInt(req.params.id);
+    const id: number = parseInt(req.params.id);
+    console.log(req.params);
+    
     const data = req.body;
     services
       .updateOrganization(data, id)
